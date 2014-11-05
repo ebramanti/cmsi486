@@ -1,0 +1,70 @@
+\documentclass[11pt]{report}
+\usepackage{blindtext}
+\usepackage[margin=1in]{geometry}
+\title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project --- Fall 2014}
+\author{Edward Bramanti}
+
+\providecommand\phantomsection{}
+
+
+\renewcommand\thechapter{\Roman{chapter}}
+\renewcommand\thesection{\thechapter.\arabic{section}}
+
+\usepackage{tocloft}
+\setlength{\cftchapnumwidth}{3em}
+\setlength{\cftsecnumwidth}{3.5em}
+\setlength{\cftsubsecnumwidth}{4em}
+
+\begin{document}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{
+    \protect\numberline{I}Title Page}
+\maketitle
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{
+    \protect\numberline{II}Table of Contents}
+\tableofcontents
+\setcounter{page}{2}
+\setcounter{chapter}{2}
+\chapter{Description of the Enterprise}
+
+Thanks is an effective, entirely digital, multi-purpose employee recognition system. The database will consist of many different companies who will pay for a service that makes recognizing employees simple and meaningful. This will allow the Thanks database to be used in a way that is unique to each company using the service.
+
+The enterprise in question will make it much easier for employees to recognize one another across their company. As companies grow, it becomes difficult to maintain an atmosphere of employee worth. This growing size represents a problem as individual employees can feel like their work goes unnoticed in their company. “Thanks” provides a remedy for that by providing a digital way to send recognition to any employee quickly.
+
+In an organization, there will be one user type with some special attributes. For example, an executive will be a special user type and will be denoted with special attributes. When opening the thanks form, it will be necessary to present a list of all employees in the company. A list of employees would appear with these attributes: name, position and department. This would provide employees with a clear snapshot on everyone’s role in the company if they saw a fellow employee do something amazing and was not sure what position they occupied in the company. Users will be able to send other users the primary data type known as Thanks. For each thank, we have a user that gives the Thanks and a user that receives the Thanks. This demonstrates the personal aspect of recognition, as an employee recognizes a specific employee directly.
+
+A Thanks also contains an area for an employee to write a message so they can explain what they are thanking the employee for. This allows for personalization of the Thanks so that employees can be detailed on the outstanding work their coworkers are doing. Finally, companies will be able to define a custom attribute for the last part of the Thanks, which will be represented as values the company wants to promote. The advantage of this value is that companies, depending on their mission statements and core beliefs, will be able to tailor this field to encourage specific attributes that represent the company within employees.
+
+Thanks represents a social network within a company than it is a private thanking system. Messages will display on a live feed all of the “Thanks” being given around the company. Employees will be able to easily see the interaction and encouragement being spread amongst their acquaintances. The potential of “Thanks” is enormous, which is why a specific structure around a public space of thanks combined with personalized instances and explanations of employee worth are necessary in this database design.\\
+
+\clearpage
+Here are a set of questions users may pose when retrieving data:
+\begin{enumerate}
+    \item What are my coworkers thanking each other for?
+    \item How can I quickly find the name of the person I want to thank?
+    \item How can I make this thank personal and broadcast to the company how much the work they did meant to me?
+    \item (Specifically, for executives) How can we promote a focus on company values through employee recognition?
+\end{enumerate}
+
+\chapter{Definition of Environment}
+
+\section{Input and Report Forms}
+\section{Assumptions}
+\section{User-Oriented Data Dictionary}
+\section{Cross-Reference Table}
+
+\chapter{Enterprise Database Design}
+
+\section{Logical Model of the Enterprise}
+\subsection{List of Entities and Attributes}
+\subsection{List of Relationships and Attributes}
+\subsection{Entity-Relationship Diagram of the Enterprise}
+
+\section{Conceptual model of the enterprise}
+\section{Table dictionary}
+\section{Attribute dictionary}
+
+\end{document}
