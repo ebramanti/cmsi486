@@ -73,8 +73,8 @@ WHERE c.cTitle = "Boeing"
 AND e.name = "Julia Crow"
 ;
 
--- Who has never received a Thanks within the company "First America"?
-SELECT e
+-- Show all thanks that have been given in the corporation "First America".
+SELECT t
 FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
@@ -83,12 +83,6 @@ ON d.did = e.eid
 INNER JOIN thanks as t
 ON t.to = e.eid             -- `to` is an eid
 WHERE c.cTitle = "First America"
-AND (
-    SELECT t.to
-    FROM thanks as t
-    WHERE t.to = e.eid
-    AND
-)
 ;
 
 -- Who is the newest employee to have joined the company "Lightning Corporation"?
