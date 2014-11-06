@@ -3,8 +3,9 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{verbatim}
-\title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project --- Fall 2014}
+\title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project\\Fall 2014}
 \author{Edward Bramanti}
+\date{This project designs and implements a database for an employee recognition system for companies to use internally.}
 
 \providecommand\phantomsection{}
 
@@ -60,7 +61,70 @@ Here are a set of questions employees, department heads or executives may pose w
 \chapter{Definition of Environment}
 
 \section{Input and Report Forms}
+\begin{itemize}
+    \item Thanks Form
+    \begin{itemize}
+        \item Name of Employee Being Thanked
+        \item Message
+        \item Company Value (optional) \\
+        Represents a custom value that the company wants to encourage in their employees
+    \end{itemize}
+    \item Employee Profile Page \\
+    Allows for editing of a specific employee's profile. Some of the values stored in the database will not be able to be changed, such as Real Name and Job Title, and must be updated by an admin.
+    \begin{itemize}
+        \item Edit Employee's Nickname
+        \item Edit Employee's Photo
+    \end{itemize}
+    \item ``Thanks Feed'' of Company \\
+    Allows employees to see the ``Thanks Feed'' of the company, a place where signed-in employees can like Thanks messages that have been given and comment/like those thanks messages.
+    \item Thanks Item in ``Thanks Feed'' \\
+    Allows an employee to take action on a Thanks item within the ``Thanks Feed''.
+    \begin{itemize}
+        \item Like Current Message \\
+        Allows employee to like a Thanks Given, whether it's directly to/from or external from the employee.
+        \item Comment on Current Message \\
+        A comment is a text response to a Thanks Given, whether it's directly to/from or external from the employee.
+    \end{itemize}
+    \item Admin Panel for Department \\
+    Allows for department heads to manage information about their department.
+    \begin{itemize}
+        \item Edit Department Title \\
+        If the title of a department changes slightly, a department head is able to change this.
+        \item Edit Department Description \\
+        Allows department head to change the department description information.
+        \item Edit Department Employee's Job Title \\
+        Allows department head to select a specific employee's job title in their department and edit it.
+    \end{itemize}
+    \item Admin Panel for Executive \\
+    Allows for executives to manage information about their company, and to change even department-level information.
+    \begin{itemize}
+        \item Edit Company Title \\
+        Allows executives to change their company name if their corporation undergoes a name change.
+        \item Edit Company Founded Date \\
+        Allows executives to set the founding date of the company.
+        \item Set Department Heads \\
+        Allows executives to set the head of each department.
+    \end{itemize}
+    \item Webmaster Panel for DB Manager \\
+    Since Thanks Corporation is a business that provides its database service to other companies, a webmaster needs an admin panel to manage the many companies in the database.
+    \begin{itemize}
+        \item View Companies in Database \\
+        Allows webmaster to view all companies in the database
+        \item Edit Companies in Database \\
+        Allows webmaster to deactivate companies or remove companies from database.
+    \end{itemize}
+\end{itemize}
+\clearpage
 \section{Assumptions}
+\begin{enumerate}
+\item Fellow employees address thanks to other employees.
+\item Each employee gets their own account, which has predefined data and some limited customization/personalization.
+\item Employees can view a newsfeed-like interface of all thanks being given throughout the company.
+\item Employees have the ability to like and comment on all Thanks company-wide.
+\item Department heads will be able to manage their department info and certain employee info.
+\item Executives will be able to manage department heads and company info.
+\end{enumerate}
+\clearpage
 \section{User-Oriented Data Dictionary}
 \section{Cross-Reference Table}
 
