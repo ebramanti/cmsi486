@@ -178,8 +178,62 @@ company\_value(\underline{vid}, value\_type) \\
 
     CK - vid
 \clearpage
-\section{Table dictionary}
-\section{Attribute dictionary}
+\section{Table Dictionary}
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Table}} & \multicolumn{1}{c|}{\textbf{Attributes}}                & \multicolumn{1}{c|}{\textbf{Definition}}               \\ \hline
+EMPLOYEE                             & \underline{eid}, name, job\_title, photo, nickname, started, did    & Employee in a company                                  \\ \hline
+DEPARTMENT\_HEAD                     & headid, name, job\_title, photo, nickname, started      & The manager/head of a department                       \\ \hline
+EXECUTIVE                            & execid, name, job\_title, photo, nickname, started, cid & Executive in a company                                 \\ \hline
+DEPARTMENT                           & did, depTitle, depDescription, headid, cid              & Department in a company                                \\ \hline
+COMPANY                              & cid, cTitle, founded\_date                              & Represents a company, which is the starting data point \\ \hline
+THANKS                               & tid, thanksdate                                         & Data type used to recognize another employee           \\ \hline
+LIKE                                 & likeid, mid, likedate                                   & A like on a Thanks post                                \\ \hline
+COMMENT                              & commentid, mid, commentdate                             & A comment on a Thanks post                             \\ \hline
+MESSAGE                              & mid, message\_text                                      & Message of a Thanks                                    \\ \hline
+COMPANY\_VALUE                       & vid, value\_type                                        & Company value of a Thanks                              \\ \hline
+\end{tabular}
+}
+\end{table}
+\clearpage
+\section{Attribute Dictionary}
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Attribute}} & \multicolumn{1}{c|}{\textbf{Tables Used In}} \\ \hline
+eid                                      & EMPLOYEE                                     \\ \hline
+headid                                   & DEPARTMENT\_HEAD                             \\ \hline
+execid                                   & EXECUTIVE                                    \\ \hline
+name                                     & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
+job\_title                               & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
+photo                                    & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
+nickname                                 & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
+started                                  & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
+did                                      & DEPARTMENT                                   \\ \hline
+depTitle                                 & DEPARTMENT                                   \\ \hline
+depDescription                           & DEPARTMENT                                   \\ \hline
+cid                                      & COMPANY                                      \\ \hline
+cTitle                                   & COMPANY                                      \\ \hline
+founded\_date                            & COMPANY                                      \\ \hline
+tid                                      & THANKS                                       \\ \hline
+thanksdate                               & THANKS                                       \\ \hline
+likeid                                   & LIKE                                         \\ \hline
+likedate                                 & LIKE                                         \\ \hline
+commentid                                & COMMENT                                      \\ \hline
+commentdate                              & COMMENT                                      \\ \hline
+mid                                      & MESSAGE                                      \\ \hline
+message\_text                            & MESSAGE                                      \\ \hline
+vid                                      & COMPANY\_VALUE                               \\ \hline
+value\_type                              & COMPANY\_VALUE                               \\ \hline
+\end{tabular}
+}
+\end{table}
+\clearpage
 
 \chapter{Database and Query Definition}
 
