@@ -2,6 +2,7 @@
 \usepackage{blindtext}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{verbatim}
 \title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project --- Fall 2014}
 \author{Edward Bramanti}
 
@@ -139,7 +140,57 @@ Here are a set of questions employees, department heads or executives may pose w
 \clearpage
 
 \section{Conceptual model of the enterprise}
+employee(\underline{eid}, name, job\_title, photo, nickname, started) \\
+
+    CK - eid, name, photo
+
+departmenthead(\underline{headid}) \\
+
+executive(\underline{execid}) \\
+
+department(\underline{did}, depTitle, depDescription) \\
+
+    CK - did, depTitle
+
+company(\underline{cid}, cTitle, founded\_date) \\
+
+    CK - cid, cTitle
+
+thanks(\underline{tid}, thanksdate) \\
+
+    CK - tid
+
+like(\underline{tid}, likedate) \\
+
+    CK - tid
+    FK - tid REFERENCES thanks.tid
+
+comment(\underline{tid}, commentdate) \\
+
+    CK - tid
+    FK - tid REFERENCES thanks.tid
+
+message(\underline{mid}, message\_text) \\
+
+    CK - mid
+
+company\_value(\underline{vid}, value\_type) \\
+
+    CK - vid
+\clearpage
 \section{Table dictionary}
 \section{Attribute dictionary}
+
+\chapter{Database and Query Definition}
+
+\section{Database Definition}
+\verbatiminput{sql/ThanksCorporation.sql}
+\section{Database Queries}
+Given below are 10 example English queries, with their SQL DML used to retrieve the necessary data.
+\begin{enumerate}
+    \item Bla
+\end{enumerate}
+\clearpage
+\section{Design Tradeoffs and Limitations}
 
 \end{document}
