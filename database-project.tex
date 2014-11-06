@@ -1,6 +1,7 @@
 \documentclass[11pt]{report}
 \usepackage{blindtext}
 \usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
 \title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project --- Fall 2014}
 \author{Edward Bramanti}
 
@@ -66,8 +67,76 @@ Here are a set of questions employees, department heads or executives may pose w
 
 \section{Logical Model of the Enterprise}
 \subsection{List of Entities and Attributes}
+
+\begin{itemize}
+\item Employee
+    \begin{itemize}
+    \item eid: Employee ID
+    \item name: Employee Name
+    \item job\_title: Employee Job Title
+    \item photo: Employee Photo
+    \item nickname: Employee Nickname
+    \item started: Date the Employee Started
+    \end{itemize}
+\item Department Head - inherits Employee
+    \begin{itemize}
+    \item headid: Department Head ID
+    \end{itemize}
+\item Executive - inherits Employee
+    \begin{itemize}
+    \item execid: Executive ID
+    \end{itemize}
+\item Department
+    \begin{itemize}
+    \item did: Department ID
+    \item depTitle: Department Title
+    \item depDescription: Department Description
+    \end{itemize}
+\item Company
+    \begin{itemize}
+    \item cid: Company ID
+    \item cTitle: Company Title
+    \item founded\_date: Date Company was Founded
+    \end{itemize}
+\item Thanks
+    \begin{itemize}
+    \item tid: Thanks ID
+    \item thanksdate: Date Thanks was Given
+    \end{itemize}
+\item Like
+    \begin{itemize}
+    \item likedate: Date Like was Given
+    \end{itemize}
+\item Comment
+    \begin{itemize}
+    \item commentdate: Date Comment was Given
+    \end{itemize}
+\item Message
+    \begin{itemize}
+    \item mid: Message ID
+    \item message\_text: Text of Message
+    \end{itemize}
+\item Company Value
+    \begin{itemize}
+    \item vid: Company Value ID
+    \item value\_type: type of company value
+    \end{itemize}
+\end{itemize}
+\clearpage
+
 \subsection{List of Relationships and Attributes}
+\begin{itemize}
+\item Relationship
+\end{itemize}
+\clearpage
+
 \subsection{Entity-Relationship Diagram of the Enterprise}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=.7]{./images/ERD11-4.png}
+\end{figure}
+\clearpage
 
 \section{Conceptual model of the enterprise}
 \section{Table dictionary}
