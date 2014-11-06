@@ -4,7 +4,7 @@ FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
 INNER JOIN employee as e
-on d.did = e.eid
+ON d.did = e.did
 WHERE c.cTitle = "I Love Thanks"
 ;
 
@@ -12,6 +12,7 @@ WHERE c.cTitle = "I Love Thanks"
 SELECT d.depTitle
 FROM company AS c
 INNER JOIN department as d
+ON c.cid = d.cid
 WHERE c.cTitle = "Blitz"
 ;
 
@@ -30,7 +31,7 @@ FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
 INNER JOIN employee as e
-on d.did = e.eid
+ON d.did = e.did
 WHERE c.photo IS NULL
 AND c.cTitle = "I Love Thanks"
 ;
@@ -47,13 +48,12 @@ WHERE c.cTitle = "Insomniac Corporation"
 ;
 
 -- Show all of the Thanks that Julia Crow from "Playa Medical" gave.
-
 SELECT t
 FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
 INNER JOIN employee as e
-ON d.did = e.eid
+ON d.did = e.did
 INNER JOIN thanks as t
 ON t.from = e.eid
 WHERE c.cTitle = "Playa Medical"
@@ -66,7 +66,7 @@ FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
 INNER JOIN employee as e
-ON d.did = e.eid
+ON d.did = e.did
 INNER JOIN thanks as t
 ON t.from = e.eid
 WHERE c.cTitle = "Boeing"
@@ -79,9 +79,9 @@ FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
 INNER JOIN employee as e
-ON d.did = e.eid
+ON d.did = e.did
 INNER JOIN thanks as t
-ON t.to = e.eid             -- `to` is an eid
+ON t.to = e.eid
 WHERE c.cTitle = "First America"
 ;
 
@@ -91,7 +91,7 @@ FROM company as c
 INNER JOIN department as d
 ON c.cid = d.cid
 INNER JOIN employee as e
-ON d.did = e.eid
+ON d.did = e.did
 WHERE c.cTitle = "Lightning Corporation"
 AND e.started = (
     SELECT MAX(e.started)

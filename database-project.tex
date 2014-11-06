@@ -45,16 +45,16 @@ Thanks represents a social network within a company than it is a private thankin
 \clearpage
 Here are a set of questions employees, department heads or executives may pose when retrieving data:
 \begin{enumerate}
-    \item List all employees in the company ``I Love Thanks".
+    \item List the names of all employees in the company.
     \item Which department has received the most Thanks in the company?
     \item Return a list of all employees who have nicknames.
-    \item List all company values for the ``I Love Thanks" company.
+    \item List all company values for the company.
     \item Which department head has received the most Thanks in the company?
-    \item Which one of Julia Crow's Thanks she gave received the most likes?
+    \item Which one of an employee's thanks they gave received the most likes?
     \item Who has never received a Thanks within a company?
     \item Who is the newest employee to have joined the company?
-    \item How many Thanks were posted in the company on October 20, 2014?
-    \item List the executives in the company ``I Love Thanks".
+    \item What Thanks were posted in the database on October 20, 2014?
+    \item List the executives in the company.
 \end{enumerate}
 
 \chapter{Definition of Environment}
@@ -186,9 +186,138 @@ company\_value(\underline{vid}, value\_type) \\
 \section{Database Definition}
 \verbatiminput{sql/ThanksCorporation.sql}
 \section{Database Queries}
-Given below are 10 example English queries, with their SQL DML used to retrieve the necessary data.
+Given below are 11 example English queries, with their SQL DML used to retrieve the necessary data.
 \begin{enumerate}
-    \item Bla
+    \item List the names of all employees in the company ``I Love Thanks".
+    \begin{verbatim}
+    SELECT e.name
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN employee as e
+    ON d.did = e.did
+    WHERE c.cTitle = "I Love Thanks"
+    ;
+    \end{verbatim}
+    \item Show all department names in the corporation ``Blitz''.
+    \begin{verbatim}
+    SELECT d.depTitle
+    FROM company AS c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    WHERE c.cTitle = "Blitz"
+    ;
+    \end{verbatim}
+    \item Return a list of all employees in the database who have nicknames.
+    \begin{verbatim}
+    SELECT e.name, e.nickname
+    FROM employee AS e
+    WHERE EXISTS (
+        SELECT e.nickname
+        FROM employee
+    )
+    ;
+    \end{verbatim}
+    \item Show names of employees who do not have photos in the ``I Love Thanks" company.
+    \begin{verbatim}
+    SELECT e.name
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN employee as e
+    ON d.did = e.did
+    WHERE c.photo IS NULL
+    AND c.cTitle = "I Love Thanks"
+    ;
+    \end{verbatim}
+    \item Show all department heads in ``Insomniac Corporation''.
+    \begin{verbatim}
+    SELECT dh
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN department_head as dh
+    ON d.headid = dh.headid
+    WHERE c.cTitle = "Insomniac Corporation"
+    ;
+    \end{verbatim}
+    \item Show all of the Thanks that Julia Crow from ``Playa Medical'' gave.
+    \begin{verbatim}
+    SELECT t
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN employee as e
+    ON d.did = e.did
+    INNER JOIN thanks as t
+    ON t.from = e.eid
+    WHERE c.cTitle = "Playa Medical"
+    AND e.name = "Julia Crow"
+    ;
+    \end{verbatim}
+    \item Show all of the Thanks that Emma Cross from ``Boeing'' received.
+    \begin{verbatim}
+    SELECT t
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN employee as e
+    ON d.did = e.did
+    INNER JOIN thanks as t
+    ON t.from = e.eid
+    WHERE c.cTitle = "Boeing"
+    AND e.name = "Julia Crow"
+    ;
+    \end{verbatim}
+    \item Show all thanks that have been given in the corporation ``First America''.
+    \begin{verbatim}
+    SELECT t
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN employee as e
+    ON d.did = e.did
+    INNER JOIN thanks as t
+    ON t.to = e.eid
+    WHERE c.cTitle = "First America"
+    ;
+    \end{verbatim}
+    \item Who is the newest employee to have joined the company ``Lightning Corporation''?
+    \begin{verbatim}
+    SELECT e.name
+    FROM company as c
+    INNER JOIN department as d
+    ON c.cid = d.cid
+    INNER JOIN employee as e
+    ON d.did = e.did
+    WHERE c.cTitle = "Lightning Corporation"
+    AND e.started = (
+        SELECT MAX(e.started)
+        FROM company as c
+        INNER JOIN department as d
+        ON c.cid = d.cid
+        INNER JOIN employee as e
+        ON d.did = e.eid
+        WHERE c.cTitle = "Lightning Corporation"
+    )
+    ;
+    \end{verbatim}
+    \item List all thanks posted in the database in October.
+    \begin{verbatim}
+    SELECT t
+    FROM thanks as t
+    WHERE MONTHNAME(t.thanksdate) = "October"
+    ;
+    \end{verbatim}
+    \item List the executives in the company ``I Love Thanks".
+    \begin{verbatim}
+    SELECT e
+    FROM company as c
+    INNER JOIN executive as e
+    ON c.cid = e.cid
+    WHERE c.cTitle = "I Love Thanks"
+    ;
+    \end{verbatim}
 \end{enumerate}
 \clearpage
 \section{Design Tradeoffs and Limitations}
