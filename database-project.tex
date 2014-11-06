@@ -193,4 +193,10 @@ Given below are 10 example English queries, with their SQL DML used to retrieve 
 \clearpage
 \section{Design Tradeoffs and Limitations}
 
+One design tradeoff in its current state is the lack of Thanks being tied to the company. In order to gain access to all thanks by company, multiple joins must be performed instead of having a relationship directly between company and the thanks given within a company. This may be remedied in the future by adding a relationship between THANKS and COMPANY.\\
+
+Another design tradeoff is the lack of relationship between COMPANY and COMPANY\_VALUE. This issue is very similar to the tradeoff listed above: multiple joins are required in order to get the COMPANY\_VALUE when a relationship could be tied between COMPANY and COMPANY\_VALUE.\\
+
+Finally, one design difficulty was in how employees are linked to thanks. Two foreign keys are required in a Thanks entity, which have been aliased to `to' and `from'. Both of these reference an employee, and can create difficulty due to the aliasing of the foreign keys. However, this is necessary in the current implementation.
+
 \end{document}
