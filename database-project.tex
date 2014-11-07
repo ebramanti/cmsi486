@@ -239,7 +239,26 @@ thanks\_feed                         &             & \multicolumn{1}{c|}{}      
 
 \subsection{List of Relationships and Attributes}
 \begin{itemize}
-\item Relationship
+\item COMPANY\_OF\_DEPARTMENT(\underline{did}, cid) \\
+CK - did \\
+\item EXECUTIVE\_OF\_COMPANY(\underline{execid}, cid) \\
+CK - execid \\
+\item HEAD\_OF\_DEPARTMENT(\underline{headid}, did) \\
+CK - headid, did \\
+\item DEPARTMENT\_OF\_EMPLOYEE(\underline{eid}, did) \\
+CK - eid \\
+\item THANKS\_TO(\underline{to},eid) \\
+CK - to\\
+\item THANKS\_FROM(\underline{from},eid) \\
+CK - from\\
+\item THANKS\_MESSAGE(\underline{tid},mid) \\
+CK - tid\\
+\item THANKS\_LIKE(\underline{likeid},mid) \\
+CK - likeid\\
+\item THANKS\_COMMENT(\underline{commentid},mid) \\
+CK - commentid\\
+\item THANKS\_VALUE(\underline{thanks.vid},company\_value.vid) \\
+CK - thanks.vid\\
 \end{itemize}
 \clearpage
 
