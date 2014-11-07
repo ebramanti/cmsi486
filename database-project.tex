@@ -126,7 +126,55 @@ Here are a set of questions employees, department heads or executives may pose w
 \end{enumerate}
 \clearpage
 \section{User-Oriented Data Dictionary}
+\begin{table}[h]
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Datum}} & \multicolumn{1}{c|}{\textbf{Information Definition}}                            \\ \hline
+comment\_data                        & Text data contained within a comment on a Thanks data type                      \\ \hline
+companies                            & View of companies for a webmaster of Thanks                                     \\ \hline
+company\_title                       & Title of a company using Thanks                                                 \\ \hline
+company\_value                       & Value being exuding that represents the company in the Thanks \\ \hline
+department\_description              & Description of particular department in text form                               \\ \hline
+department\_title                    & The name of a particular department within the company                          \\ \hline
+employee\_department                 & Department employee works in                                                    \\ \hline
+employee\_name                       & Name of employee in the company, form                                           \\ \hline
+employee\_nickname                   & Nickname of an employee                                                         \\ \hline
+employee\_photo                      & Photo of an employee for the Thanks database                                    \\ \hline
+employee\_title                      & Job title of an employee’s position                                             \\ \hline
+founded\_date                        & Date that a company was founded                                                 \\ \hline
+like\_data                           & Stored when an employee likes a Thanks another employee game                    \\ \hline
+message\_data                        & Text data contained within the body of a Thanks data type                       \\ \hline
+thanks\_feed                         & List of all Thanks in a corporation                                             \\ \hline
+\end{tabular}
+\end{table}
+\clearpage
 \section{Cross-Reference Table}
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|cccccc}
+\cline{1-2}
+\multicolumn{1}{|c|}{\textbf{Datum}} & Form/Screen &                                       &                                    &                                  &                                             &                                            &                                            \\ \hline
+\multicolumn{1}{|c|}{\textbf{}}      & Thanks Form & \multicolumn{1}{c|}{Employee Profile} & \multicolumn{1}{c|}{"Thanks Feed"} & \multicolumn{1}{c|}{Thanks Item} & \multicolumn{1}{c|}{Department Admin Panel} & \multicolumn{1}{c|}{Executive Admin Panel} & \multicolumn{1}{c|}{Webmaster Admin Panel} \\ \hline
+comment\_data                        &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+companies                            &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{X}                     \\ \hline
+company\_title                       &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
+company\_value                       & X           & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+department\_description              &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{X}                      & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+department\_title                    &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{X}                      & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+employee\_department                 &             & \multicolumn{1}{c|}{X}                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+employee\_name                       & X           & \multicolumn{1}{c|}{X}                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{X}                      & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
+employee\_nickname                   &             & \multicolumn{1}{c|}{X}                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{X}                      & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
+employee\_photo                      &             & \multicolumn{1}{c|}{X}                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+employee\_title                      &             & \multicolumn{1}{c|}{X}                & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{X}                      & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
+founded\_date                        &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
+like\_data                           &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+message\_data                        & X           & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+thanks\_feed                         &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
+\end{tabular}
+}
+\end{table}
+\clearpage
 
 \chapter{Enterprise Database Design}
 
