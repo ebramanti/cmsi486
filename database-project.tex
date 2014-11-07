@@ -154,8 +154,8 @@ thanks\_feed                         & List of all Thanks in a corporation      
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{|l|c|cccccc}
 \cline{1-2}
-\multicolumn{1}{|c|}{\textbf{Datum}} & Form/Screen &                                       &                                    &                                  &                                             &                                            &                                            \\ \hline
-\multicolumn{1}{|c|}{\textbf{}}      & Thanks Form & \multicolumn{1}{c|}{Employee Profile} & \multicolumn{1}{c|}{"Thanks Feed"} & \multicolumn{1}{c|}{Thanks Item} & \multicolumn{1}{c|}{Department Admin Panel} & \multicolumn{1}{c|}{Executive Admin Panel} & \multicolumn{1}{c|}{Webmaster Admin Panel} \\ \hline
+\multicolumn{1}{|c|}{\textbf{Datum}} & \textbf{Form/Screen} &                                       &                                    &                                  &                                             &                                            &                                            \\ \hline
+\multicolumn{1}{|c|}{\textbf{}}      & \textbf{Thanks Form} & \multicolumn{1}{c|}{\textbf{Employee Profile}} & \multicolumn{1}{c|}{\textbf{"Thanks Feed"}} & \multicolumn{1}{c|}{\textbf{Thanks Item}} & \multicolumn{1}{c|}{\textbf{Department Admin Panel}} & \multicolumn{1}{c|}{\textbf{Executive Admin Panel}} & \multicolumn{1}{c|}{\textbf{Webmaster Admin Panel}} \\ \hline
 comment\_data                        &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
 companies                            &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{X}                     \\ \hline
 company\_title                       &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
@@ -251,44 +251,60 @@ thanks\_feed                         &             & \multicolumn{1}{c|}{}      
 \end{figure}
 \clearpage
 
-\section{Conceptual model of the enterprise}
-employee(\underline{eid}, name, job\_title, photo, nickname, started) \\
+\section{Conceptual Model of the Enterprise}
+A conceptual model of the Thanks database. \\
 
-    CK - eid, name, photo
+employee(\underline{eid}, name, job\_title, photo, nickname, started) \\
+PK - eid \\
+CK - eid, name, photo \\
+AK - name, photo \\
+FK - employee.did REFERENCES department.did \\
 
 departmenthead(\underline{headid}) \\
+PK - headid \\
+CK - headid \\
 
 executive(\underline{execid}) \\
+PK - execid \\
+CK - execid \\
+FK - executive.cid REF company.cid \\
 
 department(\underline{did}, depTitle, depDescription) \\
-
-    CK - did, depTitle
+PK - did \\
+CK - did \\
+FK - department.headid REFERENCES departmenthead.headid \\
+     department.cid REFERENCES company.cid \\
 
 company(\underline{cid}, cTitle, founded\_date) \\
+PK - cid \\
+CK - cid, cTitle \\
+AK - cTitle \\
 
-    CK - cid, cTitle
+thanks(\underline{(tid, mid)}, thanksdate) \\
+PK - (tid, mid) \\
+CK - tid \\
+FK - thanks.mid REFERENCES message.mid \\
+     thanks.to REFERENCES employee.eid \\
+     thanks.from REFERENCES employee.eid \\
+     thanks.vid REFERENCES company\_value.vid \\
 
-thanks(\underline{tid}, thanksdate) \\
+like(\underline{(likeid, mid)}, likedate) \\
+PK - (likeid, mid) \\
+CK - likeid \\
+FK - like.mid REFERENCES message.mid \\
 
-    CK - tid
-
-like(\underline{tid}, likedate) \\
-
-    CK - tid
-    FK - tid REFERENCES thanks.tid
-
-comment(\underline{tid}, commentdate) \\
-
-    CK - tid
-    FK - tid REFERENCES thanks.tid
+comment(\underline{(commentid, mid)}, commentdate) \\
+PK - (commentid, mid) \\
+CK - commentid \\
+FK - comment.mid REFERENCES message.mid \\
 
 message(\underline{mid}, message\_text) \\
-
-    CK - mid
+PK - mid \\
+CK - mid \\
 
 company\_value(\underline{vid}, value\_type) \\
-
-    CK - vid
+PK - vid \\
+CK - vid \\
 \clearpage
 \section{Table Dictionary}
 \begin{table}[h]
