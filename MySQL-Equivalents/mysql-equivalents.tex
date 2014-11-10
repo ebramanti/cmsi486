@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\title{MySQL Equivalents}
+\author{Edward Bramanti}
+
+\begin{document}
+\maketitle
+\begin{enumerate}
+    \item Triggers
+    \begin{enumerate}
+        \item Syntax
+        \begin{verbatim}
+CREATE
+    [DEFINER = { user | CURRENT_USER }]
+    TRIGGER trigger_name
+    trigger_time trigger_event
+    ON tbl_name FOR EACH ROW
+    trigger_body
+
+trigger_time: { BEFORE | AFTER }
+
+trigger_event: { INSERT | UPDATE | DELETE }
+        \end{verbatim}
+        \item Example in DB Project
+        \begin{verbatim}
+DELIMITER //
+CREATE TRIGGER check_date BEFORE UPDATE
+ON employee
+FOR EACH ROW
+BEGIN
+    IF NEW.startdate < company.founded_date THEN
+        SET NEW.startdate = company.founded_date;
+    END IF;
+END;//
+DELIMITER ;
+        \end{verbatim}
+    \end{enumerate}
+    \item Assertions \\
+        There is no syntax for assertions in MySQL. Assertions are not available in MySQL, which requires using triggers in order to obtain an assertion-like result. This means assertions can be written using the trigger syntax above in MySQL.
+    \pagebreak
+    \item Check constraints
+    \begin{enumerate}
+        \item Syntax \\
+        Check constraints can be created in MySQL using triggers.
+        \begin{verbatim}
+CREATE TRIGGER <for_insert> BEFORE INSERT ON <table> FOR EACH ROW
+IF NOT <some_constraint> THEN
+CALL <some_function>;  -- use this to raise error
+
+CREATE TRIGGER <for_update> BEFORE UPDATE ON <table> FOR EACH ROW
+IF NOT <some_constraint> THEN
+CALL <some_function>;  -- use this to raise error
+        \end{verbatim}
+        \item Example in DB Project
+        \begin{verbatim}
+DELIMITER //
+
+CREATE TRIGGER check_date_insert BEFORE INSERT ON employee FOR EACH ROW
+IF NOT (NEW.startdate > company.founded_date) THEN
+  CALL invalid_date;  -- error
+END IF//
+
+CREATE TRIGGER check_date_update BEFORE UPDATE ON employee FOR EACH ROW
+IF NOT (NEW.startdate > company.founded_date) THEN
+  CALL invalid_noise_level;  -- error
+END IF//
+
+DELIMITER ;
+        \end{verbatim}
+    \end{enumerate}
+    \pagebreak
+    \item Stored Procedures
+    \begin{enumerate}
+        \item Syntax \\
+        Here is an example provided from the MySQL website for changing a country's head of state.
+        \begin{verbatim}
+DELIMITER //
+CREATE PROCEDURE country_hos
+(IN con CHAR(20))
+BEGIN
+  SELECT Name, HeadOfState FROM Country
+  WHERE Continent = con;
+END //
+DELIMITER ;
+        \end{verbatim}
+        \item Example in DB Project
+        \begin{verbatim}
+DELIMITER //
+CREATE PROCEDURE get_thanks_given
+(IN from VARCHAR(30))
+BEGIN
+  SELECT * FROM thanks AS t
+  WHERE t.from = from;
+END //
+DELIMITER ;
+        \end{verbatim}
+    \end{enumerate}
+    \item User-defined data types or domains \\
+    There are no user-defined data types in MySQL. More information can be found in the MySQL documentation about the data types that are available in MySQL5.5 here: http://dev.mysql.com/doc/refman/5.5/en/data-types.html
+    \item Foreign key constraint qualifiers
+    \begin{enumerate}
+        \item on DELETE\textbar UPDATE cascade
+        \begin{enumerate}
+            \item Syntax
+            \begin{verbatim}
+ALTER TABLE <table>
+ADD FOREIGN KEY <fk>
+REFERENCES <some_table>(<fk>)
+ON [DELETE|UPDATE] CASCADE
+;
+            \end{verbatim}
+            \pagebreak
+            \item Example in DB Project
+            \begin{verbatim}
+ALTER TABLE thanks
+ADD FOREIGN KEY (eid)
+REFERENCES employee(eid)
+ON DELETE CASCADE
+;
+            \end{verbatim}
+        \end{enumerate}
+        \item on DELETE\textbar UPDATE restrict
+        \begin{enumerate}
+            \item Syntax
+            \begin{verbatim}
+ALTER TABLE <table>
+ADD FOREIGN KEY <fk>
+REFERENCES <some_table>(<fk>)
+ON [DELETE|UPDATE] RESTRICT
+;
+            \end{verbatim}
+            \item Example in DB Project
+            \begin{verbatim}
+ALTER TABLE thanks
+ADD FOREIGN KEY (eid)
+REFERENCES employee(eid)
+ON DELETE RESTRICT
+;
+            \end{verbatim}
+        \end{enumerate}
+        \item on DELETE\textbar UPDATE nullify
+        \begin{enumerate}
+            \item Syntax
+            \begin{verbatim}
+ALTER TABLE <table>
+ADD FOREIGN KEY <fk>
+REFERENCES <some_table>(<fk>)
+ON [DELETE|UPDATE] NULLIFY
+;
+            \end{verbatim}
+            \item Example in DB Project
+            \begin{verbatim}
+ALTER TABLE thanks
+ADD FOREIGN KEY (eid)
+REFERENCES employee(eid)
+ON DELETE NULLIFY
+;
+            \end{verbatim}
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
