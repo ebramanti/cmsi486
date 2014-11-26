@@ -200,14 +200,6 @@ thanks\_feed                         &             & \multicolumn{1}{c|}{}      
     \item nickname: Employee Nickname
     \item started: Date the Employee Started
     \end{itemize}
-\item Department Head - inherits Employee
-    \begin{itemize}
-    \item headid: Department Head ID
-    \end{itemize}
-\item Executive - inherits Employee
-    \begin{itemize}
-    \item execid: Executive ID
-    \end{itemize}
 \item Department
     \begin{itemize}
     \item did: Department ID
@@ -250,10 +242,6 @@ thanks\_feed                         &             & \multicolumn{1}{c|}{}      
 \begin{itemize}
 \item COMPANY\_OF\_DEPARTMENT(\underline{did}, cid) \\
 CK - did \\
-\item EXECUTIVE\_OF\_COMPANY(\underline{execid}, cid) \\
-CK - execid \\
-\item HEAD\_OF\_DEPARTMENT(\underline{headid}, did) \\
-CK - headid, did \\
 \item DEPARTMENT\_OF\_EMPLOYEE(\underline{eid}, did) \\
 CK - eid \\
 \item THANKS\_TO(\underline{to},eid) \\
@@ -288,14 +276,6 @@ CK - eid, name, photo \\
 AK - name, photo \\
 FK - employee.did REFERENCES department.did \\
 
-departmenthead(\underline{headid}) \\
-PK - headid \\
-CK - headid \\
-
-executive(\underline{execid}) \\
-PK - execid \\
-CK - execid \\
-FK - executive.cid REF company.cid \\
 
 department(\underline{did}, depTitle, depDescription) \\
 PK - did \\
@@ -343,15 +323,11 @@ CK - vid \\
 \hline
 \multicolumn{1}{|c|}{\textbf{Table}} & \multicolumn{1}{c|}{\textbf{Attributes}}                & \multicolumn{1}{c|}{\textbf{Definition}}               \\ \hline
 EMPLOYEE                             & \underline{eid}, name, job\_title, photo, nickname, started, did    & Employee in a company                                  \\ \hline
-DEPARTMENT\_HEAD                     & headid, name, job\_title, photo, nickname, started      & The manager/head of a department                       \\ \hline
-EXECUTIVE                            & execid, name, job\_title, photo, nickname, started, cid & Executive in a company                                 \\ \hline
-DEPARTMENT                           & did, depTitle, depDescription, headid, cid              & Department in a company                                \\ \hline
-COMPANY                              & cid, cTitle, founded\_date                              & Represents a company, which is the starting data point \\ \hline
-THANKS                               & tid, thanksdate                                         & Data type used to recognize another employee           \\ \hline
-LIKE                                 & likeid, mid, likedate                                   & A like on a Thanks post                                \\ \hline
-COMMENT                              & commentid, mid, commentdate                             & A comment on a Thanks post                             \\ \hline
-MESSAGE                              & mid, message\_text                                      & Message of a Thanks                                    \\ \hline
-COMPANY\_VALUE                       & vid, value\_type                                        & Company value of a Thanks                              \\ \hline
+THANKS                               & tid, thanksdate                                                     & Data type used to recognize another employee           \\ \hline
+LIKE                                 & likeid, mid, likedate                                               & A like on a Thanks post                                \\ \hline
+COMMENT                              & commentid, mid, commentdate                                         & A comment on a Thanks post                             \\ \hline
+MESSAGE                              & mid, message\_text                                                  & Message of a Thanks                                    \\ \hline
+COMPANY\_VALUE                       & vid, value\_type                                                    & Company value of a Thanks                              \\ \hline
 \end{tabular}
 }
 \end{table}
@@ -360,33 +336,32 @@ COMPANY\_VALUE                       & vid, value\_type                         
 \begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|l|}
+\begin{tabular}{|l|l|l|}
+
 \hline
-\multicolumn{1}{|c|}{\textbf{Attribute}} & \multicolumn{1}{c|}{\textbf{Tables Used In}} \\ \hline
-eid                                      & EMPLOYEE                                     \\ \hline
-headid                                   & DEPARTMENT\_HEAD                             \\ \hline
-execid                                   & EXECUTIVE                                    \\ \hline
-name                                     & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
-job\_title                               & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
-photo                                    & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
-nickname                                 & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
-started                                  & EMPLOYEE, DEPARTMENT\_HEAD, EXECUTIVE        \\ \hline
-did                                      & DEPARTMENT                                   \\ \hline
-depTitle                                 & DEPARTMENT                                   \\ \hline
-depDescription                           & DEPARTMENT                                   \\ \hline
-cid                                      & COMPANY                                      \\ \hline
-cTitle                                   & COMPANY                                      \\ \hline
-founded\_date                            & COMPANY                                      \\ \hline
-tid                                      & THANKS                                       \\ \hline
-thanksdate                               & THANKS                                       \\ \hline
-likeid                                   & LIKE                                         \\ \hline
-likedate                                 & LIKE                                         \\ \hline
-commentid                                & COMMENT                                      \\ \hline
-commentdate                              & COMMENT                                      \\ \hline
-mid                                      & MESSAGE                                      \\ \hline
-message\_text                            & MESSAGE                                      \\ \hline
-vid                                      & COMPANY\_VALUE                               \\ \hline
-value\_type                              & COMPANY\_VALUE                               \\ \hline
+\multicolumn{1}{|c|}{\textbf{Attribute}} & \multicolumn{1}{c|}{\textbf{Tables Used In}} & \multicolumn{1}{c|}{\textbf{Description}}        \\ \hline
+eid                                      & EMPLOYEE                                     & Unique identifier of an employee                 \\ \hline
+name                                     & EMPLOYEE                                     & Name of an employee                              \\ \hline
+job\_title                               & EMPLOYEE                                     & Job title of employee                            \\ \hline
+photo                                    & EMPLOYEE                                     & Photo of employee                                \\ \hline
+nickname                                 & EMPLOYEE                                     & Nickname of employee                             \\ \hline
+started                                  & EMPLOYEE                                     & Date that the employee started at their company  \\ \hline
+did                                      & DEPARTMENT                                   & Unique identifier of the department of a company \\ \hline
+depTitle                                 & DEPARTMENT                                   & Name (title) of the department                   \\ \hline
+depDescription                           & DEPARTMENT                                   & Description of the department                    \\ \hline
+cid                                      & COMPANY                                      & Unique identifier of a company                   \\ \hline
+cTitle                                   & COMPANY                                      & Name (title) of a company                        \\ \hline
+founded\_date                            & COMPANY                                      & Date a company was founded                       \\ \hline
+tid                                      & THANKS                                       & Unique identifier of a Thanks                    \\ \hline
+thanksdate                               & THANKS                                       & Date the Thanks was given                        \\ \hline
+likeid                                   & LIKE                                         & Unique identifier of a like on a Thanks          \\ \hline
+likedate                                 & LIKE                                         & Date the like was given                          \\ \hline
+commentid                                & COMMENT                                      & Unique identifier of a comment                   \\ \hline
+commentdate                              & COMMENT                                      & Date the comment was added to the Thanks         \\ \hline
+mid                                      & MESSAGE                                      & Unique identifier of the message of a Thanks     \\ \hline
+message\_text                            & MESSAGE                                      & Body text of the message of a Thanks             \\ \hline
+vid                                      & COMPANY\_VALUE                               & Unique identifier of a company value             \\ \hline
+value\_type                              & COMPANY\_VALUE                               & Name (type) of company value                     \\ \hline
 \end{tabular}
 }
 \end{table}
