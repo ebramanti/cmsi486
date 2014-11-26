@@ -2,12 +2,14 @@
 \usepackage{blindtext}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usepackage{verbatim}
 \title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project\\Fall 2014}
 \author{Edward Bramanti}
 \date{This project designs and implements a database for an employee recognition system for companies to use internally.}
 
 \providecommand\phantomsection{}
+\newcommand*\rot{\rotatebox{90}}
 
 
 \renewcommand\thechapter{\Roman{chapter}}
@@ -151,11 +153,18 @@ thanks\_feed                         & List of all Thanks in a corporation      
 \section{Cross-Reference Table}
 \begin{table}[h]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{.7\textwidth}{!}{%
 \begin{tabular}{|l|c|cccccc}
-\cline{1-2}
-\multicolumn{1}{|c|}{\textbf{Datum}} & \textbf{Form/Screen} &                                       &                                    &                                  &                                             &                                            &                                            \\ \hline
-\multicolumn{1}{|c|}{\textbf{}}      & \textbf{Thanks Form} & \multicolumn{1}{c|}{\textbf{Employee Profile}} & \multicolumn{1}{c|}{\textbf{"Thanks Feed"}} & \multicolumn{1}{c|}{\textbf{Thanks Item}} & \multicolumn{1}{c|}{\textbf{Department Admin Panel}} & \multicolumn{1}{c|}{\textbf{Executive Admin Panel}} & \multicolumn{1}{c|}{\textbf{Webmaster Admin Panel}} \\ \hline
+\hline
+\multicolumn{1}{|c|}{\textbf{Datum}} & \multicolumn{7}{c|}{\textbf{Form/Screen}}\\ \hline
+\multicolumn{1}{|c|}{}                                     &
+\multicolumn{1}{|c|}{\rot{\textbf{Thanks Form}}}           &
+\multicolumn{1}{c|}{\rot{\textbf{Employee Profile}}}       &
+\multicolumn{1}{c|}{\rot{\textbf{"Thanks Feed"}}}          &
+\multicolumn{1}{c|}{\rot{\textbf{Thanks Item}}}            &
+\multicolumn{1}{c|}{\rot{\textbf{Department Admin Panel}}} &
+\multicolumn{1}{c|}{\rot{\textbf{Executive Admin Panel}}}  &
+\multicolumn{1}{c|}{\rot{\textbf{Webmaster Admin Panel}}} \\ \hline
 comment\_data                        &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{X}           & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{}                      \\ \hline
 companies                            &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}              & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{}                      & \multicolumn{1}{c|}{X}                     \\ \hline
 company\_title                       &             & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{X}             & \multicolumn{1}{c|}{}            & \multicolumn{1}{c|}{}                       & \multicolumn{1}{c|}{X}                     & \multicolumn{1}{c|}{}                      \\ \hline
