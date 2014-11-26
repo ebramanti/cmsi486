@@ -256,6 +256,8 @@ CK - likeid\\
 CK - commentid\\
 \item THANKS\_VALUE(\underline{thanks.vid},company\_value.vid) \\
 CK - thanks.vid\\
+\item VALUES\_OF\_COMPANY(\underline{cid}, vid) \\
+CK - cid
 \end{itemize}
 \clearpage
 
@@ -270,12 +272,10 @@ CK - thanks.vid\\
 \section{Conceptual Model of the Enterprise}
 A conceptual model of the Thanks database. \\
 
-employee(\underline{eid}, name, job\_title, photo, nickname, started) \\
-PK - eid \\
-CK - eid, name, photo \\
-AK - name, photo \\
-FK - employee.did REFERENCES department.did \\
-
+company(\underline{cid}, cTitle, founded\_date) \\
+PK - cid \\
+CK - cid, cTitle \\
+AK - cTitle \\
 
 department(\underline{did}, depTitle, depDescription) \\
 PK - did \\
@@ -283,10 +283,11 @@ CK - did \\
 FK - department.headid REFERENCES departmenthead.headid \\
      department.cid REFERENCES company.cid \\
 
-company(\underline{cid}, cTitle, founded\_date) \\
-PK - cid \\
-CK - cid, cTitle \\
-AK - cTitle \\
+employee(\underline{eid}, name, job\_title, photo, nickname, started) \\
+PK - eid \\
+CK - eid, name, photo \\
+AK - name, photo \\
+FK - employee.did REFERENCES department.did \\
 
 thanks(\underline{(tid, mid)}, thanksdate) \\
 PK - (tid, mid) \\
@@ -313,6 +314,7 @@ CK - mid \\
 company\_value(\underline{vid}, value\_type) \\
 PK - vid \\
 CK - vid \\
+FK - company\_value.cid REFERENCES company.cid
 \clearpage
 \section{Table Dictionary}
 \begin{table}[h]
@@ -321,7 +323,9 @@ CK - vid \\
 \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
 
 \hline
-\multicolumn{1}{|c|}{\textbf{Table}} & \multicolumn{1}{c|}{\textbf{Attributes}}                & \multicolumn{1}{c|}{\textbf{Definition}}               \\ \hline
+\multicolumn{1}{|c|}{\textbf{Table}} & \multicolumn{1}{c|}{\textbf{Attributes}}                            & \multicolumn{1}{c|}{\textbf{Definition}}               \\ \hline
+COMPANY                              & cid, cTitle, founded\_date                                          & Represents a company, which is the starting data point \\ \hline
+DEPARTMENT                           & did, depTitle, depDescription, headid, cid                          & Department in a company                                \\ \hline
 EMPLOYEE                             & \underline{eid}, name, job\_title, photo, nickname, started, did    & Employee in a company                                  \\ \hline
 THANKS                               & tid, thanksdate                                                     & Data type used to recognize another employee           \\ \hline
 LIKE                                 & likeid, mid, likedate                                               & A like on a Thanks post                                \\ \hline
