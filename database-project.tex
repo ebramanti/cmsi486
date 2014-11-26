@@ -83,9 +83,9 @@ Here are a set of questions employees, department heads or executives may pose w
     Allows an employee to take action on a Thanks item within the ``Thanks Feed''.
     \begin{itemize}
         \item Like Current Message \\
-        Allows employee to like a Thanks Given, whether it's directly to/from or external from the employee.
+        Allows employee to like a Thanks Given, whether addressed directly or external from the employee.
         \item Comment on Current Message \\
-        A comment is a text response to a Thanks Given, whether it's directly to/from or external from the employee.
+        A comment is a text response to a Thanks Given, whether addressed directly or external from the employee.
     \end{itemize}
     \item Admin Panel for Department \\
     Allows for department heads to manage information about their department.
@@ -120,9 +120,9 @@ Here are a set of questions employees, department heads or executives may pose w
 \section{Assumptions}
 \begin{enumerate}
 \item Fellow employees address thanks to other employees.
-\item Each employee gets their own account, which has predefined data and some limited customization/personalization.
+\item Each employee is assigned an account, which has predefined data and some limited customization/personalization.
 \item Employees can view a newsfeed-like interface of all thanks being given throughout the company.
-\item Employees have the ability to like and comment on all Thanks company-wide.
+\item Employees have the ability to view and like/comment on all Thanks company-wide.
 \item Department heads will be able to manage their department info and certain employee info.
 \item Executives will be able to manage department heads and company info.
 \end{enumerate}
@@ -338,7 +338,8 @@ CK - vid \\
 \begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+
 \hline
 \multicolumn{1}{|c|}{\textbf{Table}} & \multicolumn{1}{c|}{\textbf{Attributes}}                & \multicolumn{1}{c|}{\textbf{Definition}}               \\ \hline
 EMPLOYEE                             & \underline{eid}, name, job\_title, photo, nickname, started, did    & Employee in a company                                  \\ \hline
