@@ -11,8 +11,8 @@
 --
 
 CREATE TABLE COMMENT(
-    commentid      VARCHAR(30)    NOT NULL,
-    mid            VARCHAR(30)    NOT NULL,
+    commentid      INT            NOT NULL AUTO_INCREMENT,
+    mid            INT            NOT NULL,
     commentdate    DATETIME       NOT NULL,
     PRIMARY KEY (commentid, mid)
 )ENGINE=INNODB
@@ -25,7 +25,7 @@ CREATE TABLE COMMENT(
 --
 
 CREATE TABLE COMPANY(
-    cid             VARCHAR(30)    NOT NULL,
+    cid             INT            NOT NULL AUTO_INCREMENT,
     cTitle          VARCHAR(30)    NOT NULL,
     founded_date    DATETIME       NOT NULL,
     PRIMARY KEY (cid)
@@ -39,8 +39,8 @@ CREATE TABLE COMPANY(
 --
 
 CREATE TABLE COMPANY_VALUE(
-    vid           VARCHAR(30)    NOT NULL,
-    cid           VARCHAR(30)    NOT NULL,
+    vid           INT            NOT NULL AUTO_INCREMENT,
+    cid           INT            NOT NULL,
     value_type    VARCHAR(30)    NOT NULL,
     PRIMARY KEY (vid, cid)
 )ENGINE=INNODB
@@ -53,10 +53,10 @@ CREATE TABLE COMPANY_VALUE(
 --
 
 CREATE TABLE DEPARTMENT(
-    did               VARCHAR(30)     NOT NULL,
+    did               INT             NOT NULL AUTO_INCREMENT,
     depTitle          VARCHAR(30),
     depDescription    VARCHAR(255),
-    cid               VARCHAR(30)     NOT NULL,
+    cid               INT             NOT NULL,
     PRIMARY KEY (did)
 )ENGINE=INNODB
 ;
@@ -69,13 +69,13 @@ CREATE TABLE DEPARTMENT(
 -- note: photo changed from BLOB to VARCHAR for ease of demo
 
 CREATE TABLE EMPLOYEE(
-    eid          VARCHAR(30)    NOT NULL,
+    eid          INT            NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30)    NOT NULL,
     job_title    VARCHAR(30)    NOT NULL,
     photo        VARCHAR(30),
     nickname     VARCHAR(30),
     started      DATETIME       NOT NULL,
-    did          VARCHAR(30),
+    did          INT,
     PRIMARY KEY (eid)
 )ENGINE=INNODB
 ;
@@ -87,8 +87,8 @@ CREATE TABLE EMPLOYEE(
 --
 
 CREATE TABLE `LIKE`(
-    likeid      VARCHAR(30)    NOT NULL,
-    mid         VARCHAR(30)    NOT NULL,
+    likeid      INT            NOT NULL AUTO_INCREMENT,
+    mid         INT            NOT NULL,
     likedate    DATETIME       NOT NULL,
     PRIMARY KEY (likeid, mid)
 )ENGINE=INNODB
@@ -101,7 +101,7 @@ CREATE TABLE `LIKE`(
 --
 
 CREATE TABLE MESSAGE(
-    mid             VARCHAR(30)     NOT NULL,
+    mid             INT           NOT NULL AUTO_INCREMENT,
     message_text    VARCHAR(255),
     PRIMARY KEY (mid)
 )ENGINE=INNODB
@@ -114,13 +114,13 @@ CREATE TABLE MESSAGE(
 --
 
 CREATE TABLE THANKS(
-    tid           VARCHAR(30)    NOT NULL,
-    mid           VARCHAR(30)    NOT NULL,
-    `to`          VARCHAR(30)    NOT NULL,
-    `from`        VARCHAR(30)    NOT NULL,
-    vid           VARCHAR(30),
+    tid           INT            NOT NULL AUTO_INCREMENT,
+    mid           INT            NOT NULL,
+    `to`          INT            NOT NULL,
+    `from`        INT            NOT NULL,
+    vid           INT,
     thanksdate    DATETIME       NOT NULL,
-    cid           VARCHAR(30),
+    cid           INT,
     PRIMARY KEY (tid, mid)
 )ENGINE=INNODB
 ;
