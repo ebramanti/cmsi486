@@ -66,12 +66,13 @@ CREATE TABLE DEPARTMENT(
 --
 -- TABLE: EMPLOYEE
 --
+-- note: photo changed from BLOB to VARCHAR for ease of demo
 
 CREATE TABLE EMPLOYEE(
     eid          VARCHAR(30)    NOT NULL,
     name         VARCHAR(30)    NOT NULL,
     job_title    VARCHAR(30)    NOT NULL,
-    photo        BLOB,
+    photo        VARCHAR(30),
     nickname     VARCHAR(30),
     started      DATETIME       NOT NULL,
     did          VARCHAR(30),
@@ -85,7 +86,7 @@ CREATE TABLE EMPLOYEE(
 -- TABLE: LIKE
 --
 
-CREATE TABLE LIKE(
+CREATE TABLE `LIKE`(
     likeid      VARCHAR(30)    NOT NULL,
     mid         VARCHAR(30)    NOT NULL,
     likedate    DATETIME       NOT NULL,
@@ -115,8 +116,8 @@ CREATE TABLE MESSAGE(
 CREATE TABLE THANKS(
     tid           VARCHAR(30)    NOT NULL,
     mid           VARCHAR(30)    NOT NULL,
-    to            VARCHAR(30)    NOT NULL,
-    from          VARCHAR(30)    NOT NULL,
+    `to`          VARCHAR(30)    NOT NULL,
+    `from`        VARCHAR(30)    NOT NULL,
     vid           VARCHAR(30),
     thanksdate    DATETIME       NOT NULL,
     cid           VARCHAR(30),
@@ -129,18 +130,19 @@ CREATE TABLE THANKS(
 --
 
 CREATE VIEW EMPLOYEES_IN_COMPANY AS (
-SELECT e.eid
-         , c.cid
-         , e.name
-         , c.cTitle
-         , e.job_title
-         , e.photo
-         , e.nickname
-         , e.started
-FROM company as c
-        INNER JOIN department AS d ON c.cid = d.cid
-        INNER JOIN employee AS e ON e.did = d.did
+    SELECT e.eid
+             , c.cid
+             , e.name
+             , c.cTitle
+             , e.job_title
+             , e.photo
+             , e.nickname
+             , e.started
+    FROM COMPANY as c
+            INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+            INNER JOIN EMPLOYEE AS e ON e.did = d.did
 )
+;
 
 --
 -- VIEW: THANKS_IN_COMPANY
@@ -149,16 +151,17 @@ FROM company as c
 CREATE VIEW THANKS_IN_COMPANY AS (
     SELECT t.tid
          , m.message_text
-         , t.to
-         , t."from"
+         , t.`to`
+         , t.`from`
          , cv.value_type
-    FROM company as c
-        INNER JOIN department AS d ON c.cid = d.cid
-        INNER JOIN employee AS e ON e.did = d.did
-        INNER JOIN thanks AS t ON t.to = e.eid
-        INNER JOIN message AS m ON t.mid = m.mid
-        INNER JOIN company_value as cv ON t.vid = cv.vid
+    FROM COMPANY as c
+        INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+        INNER JOIN EMPLOYEE AS e ON e.did = d.did
+        INNER JOIN THANKS AS t ON t.to = e.eid
+        INNER JOIN MESSAGE AS m ON t.mid = m.mid
+        INNER JOIN COMPANY_VALUE as cv ON t.vid = cv.vid
 )
+;
 
 --
 -- TABLE: COMMENT
@@ -204,7 +207,7 @@ ALTER TABLE EMPLOYEE ADD CONSTRAINT RefDEPARTMENT30
 -- TABLE: LIKE
 --
 
-ALTER TABLE LIKE ADD CONSTRAINT RefTHANKS19
+ALTER TABLE `LIKE` ADD CONSTRAINT RefTHANKS19
     FOREIGN KEY (likeid, mid)
     REFERENCES THANKS(tid, mid)
 ;
@@ -220,12 +223,12 @@ ALTER TABLE THANKS ADD CONSTRAINT RefCOMPANY_VALUE17
 ;
 
 ALTER TABLE THANKS ADD CONSTRAINT RefEMPLOYEE22
-    FOREIGN KEY (to)
+    FOREIGN KEY (`to`)
     REFERENCES EMPLOYEE(eid)
 ;
 
 ALTER TABLE THANKS ADD CONSTRAINT RefEMPLOYEE24
-    FOREIGN KEY (from)
+    FOREIGN KEY (`from`)
     REFERENCES EMPLOYEE(eid)
 ;
 
