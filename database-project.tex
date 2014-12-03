@@ -265,7 +265,7 @@ CK - cid
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[scale=.7]{./images/ERD11-4.png}
+\includegraphics[scale=.7]{./images/erd11-25.PNG}
 \end{figure}
 \clearpage
 
@@ -517,5 +517,56 @@ One design tradeoff in its current state is the lack of Thanks being tied to the
 Another design tradeoff is the lack of relationship between COMPANY and COMPANY\_VALUE. This issue is very similar to the tradeoff listed above: multiple joins are required in order to get the COMPANY\_VALUE when a relationship could be tied between COMPANY and COMPANY\_VALUE.\\
 
 Finally, one design difficulty was in how employees are linked to thanks. Two foreign keys are required in a Thanks entity, which have been aliased to `to' and `from'. Both of these reference an employee, and can create difficulty due to the aliasing of the foreign keys. However, this is necessary in the current implementation.
+\clearpage
+
+\chapter{Database Integrity and Security}
+
+\section{Functional Dependencies}
+\begin{itemize}
+\item cid $\rightarrow$ cTitle, founded\_date
+\item did $\rightarrow$ depTitle, depDescription
+\item eid $\rightarrow$ name, job\_title, photo, nickname, started
+\item tid $\rightarrow$ thanksdate
+\item likeid $\rightarrow$ likedate
+\item commentid $\rightarrow$ commentdate
+\item mid $\rightarrow$ message\_text
+\item vid $\rightarrow$ value\_type
+\end{itemize}
+\section{Adjustments for Normalization}
+According to these functional dependencies and after looking at the ERD, it is clear that the database has already been normalized. Therefore, no adjustments will be needed on top of what already is in normalizing this database.
+\section{Integrity and Security}
+\begin{enumerate}
+\item Users and Granted Privileges\\
+There will multiple types of access privileges to the database. These access types are listed below.
+    \begin{itemize}
+    \item Webmaster User \\
+    A webmaster represents access privileges for the owner of Thanks Corporation. He has complete access to all data at any time.
+    \item Executive User \\
+    Allows access to an executive's own company entity, and allows for modification of its attributes.
+    \item Department Head User \\
+    Allows access to a department head's own department entity, and allows for modification of its attributes.
+    \item Employee User \\
+    Allows normal access for an employee: modification of own employee entity and insert/update/delete privileges for own Thanks and related entities.
+    \end{itemize}
+\item Assertion \\
+MySQL does not directly provide assertions, however triggers have been used to provide assertion-like functionality in MySQL. Assertions the Thanks Corporation needs are listed below.
+    \begin{itemize}
+    \item Determine whether an employee giving a Thanks with a company value is using a company value from the employee's own company.
+    \end{itemize}
+\item Views \\
+Two views are utilized in this database.
+    \begin{itemize}
+    \item EMPLOYEES\_IN\_COMPANY \\
+    Returns employees from all departments associated with a company.
+    \item THANKS\_IN\_COMPANY \\
+    Returns all thanks from within a company.
+    \end{itemize}
+\end{enumerate}
+\clearpage
+\chapter{Implementation Notes}
+\section{Indices}
+\section{Data}
+\section{Query Trace}
+\section{Implementation Assessment}
 
 \end{document}
