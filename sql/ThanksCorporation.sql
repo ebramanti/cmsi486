@@ -2,12 +2,12 @@
 -- ER/Studio Data Architect 9.6 SQL Code Generation
 -- Project :      ThanksCorp.DM1
 --
--- Date Created : Tuesday, November 04, 2014 21:35:39
+-- Date Created : Tuesday, November 25, 2014 23:37:27
 -- Target DBMS : MySQL 5.x
 --
 
--- 
--- TABLE: COMMENT 
+--
+-- TABLE: COMMENT
 --
 
 CREATE TABLE COMMENT(
@@ -20,8 +20,8 @@ CREATE TABLE COMMENT(
 
 
 
--- 
--- TABLE: COMPANY 
+--
+-- TABLE: COMPANY
 --
 
 CREATE TABLE COMPANY(
@@ -34,28 +34,28 @@ CREATE TABLE COMPANY(
 
 
 
--- 
--- TABLE: COMPANY_VALUE 
+--
+-- TABLE: COMPANY_VALUE
 --
 
 CREATE TABLE COMPANY_VALUE(
     vid           VARCHAR(30)    NOT NULL,
+    cid           VARCHAR(30)    NOT NULL,
     value_type    VARCHAR(30)    NOT NULL,
-    PRIMARY KEY (vid)
+    PRIMARY KEY (vid, cid)
 )ENGINE=INNODB
 ;
 
 
 
--- 
--- TABLE: DEPARTMENT 
+--
+-- TABLE: DEPARTMENT
 --
 
 CREATE TABLE DEPARTMENT(
     did               VARCHAR(30)     NOT NULL,
     depTitle          VARCHAR(30),
     depDescription    VARCHAR(255),
-    headid            VARCHAR(30),
     cid               VARCHAR(30)     NOT NULL,
     PRIMARY KEY (did)
 )ENGINE=INNODB
@@ -63,20 +63,8 @@ CREATE TABLE DEPARTMENT(
 
 
 
--- 
--- TABLE: DEPARTMENT_HEAD 
 --
-
-CREATE TABLE DEPARTMENT_HEAD(
-    headid    VARCHAR(30)    NOT NULL,
-    PRIMARY KEY (headid)
-)ENGINE=INNODB
-;
-
-
-
--- 
--- TABLE: EMPLOYEE 
+-- TABLE: EMPLOYEE
 --
 
 CREATE TABLE EMPLOYEE(
@@ -93,21 +81,8 @@ CREATE TABLE EMPLOYEE(
 
 
 
--- 
--- TABLE: EXECUTIVE 
 --
-
-CREATE TABLE EXECUTIVE(
-    execid    VARCHAR(30)    NOT NULL,
-    cid       VARCHAR(30)    NOT NULL,
-    PRIMARY KEY (execid)
-)ENGINE=INNODB
-;
-
-
-
--- 
--- TABLE: LIKE 
+-- TABLE: LIKE
 --
 
 CREATE TABLE LIKE(
@@ -120,8 +95,8 @@ CREATE TABLE LIKE(
 
 
 
--- 
--- TABLE: MESSAGE 
+--
+-- TABLE: MESSAGE
 --
 
 CREATE TABLE MESSAGE(
@@ -133,8 +108,8 @@ CREATE TABLE MESSAGE(
 
 
 
--- 
--- TABLE: THANKS 
+--
+-- TABLE: THANKS
 --
 
 CREATE TABLE THANKS(
@@ -144,174 +119,117 @@ CREATE TABLE THANKS(
     from          VARCHAR(30)    NOT NULL,
     vid           VARCHAR(30),
     thanksdate    DATETIME       NOT NULL,
+    cid           VARCHAR(30),
     PRIMARY KEY (tid, mid)
 )ENGINE=INNODB
 ;
 
-
-
--- 
--- INDEX: Ref720 
+--
+-- VIEW: EMPLOYEES_IN_COMPANY
 --
 
-CREATE INDEX Ref720 ON COMMENT(commentid, mid)
-;
--- 
--- INDEX: Ref1529 
+CREATE VIEW EMPLOYEES_IN_COMPANY AS (
+SELECT e.eid
+         , c.cid
+         , e.name
+         , c.cTitle
+         , e.job_title
+         , e.photo
+         , e.nickname
+         , e.started
+FROM company as c
+        INNER JOIN department AS d ON c.cid = d.cid
+        INNER JOIN employee AS e ON e.did = d.did
+)
+
+--
+-- VIEW: THANKS_IN_COMPANY
 --
 
-CREATE INDEX Ref1529 ON DEPARTMENT(headid)
-;
--- 
--- INDEX: Ref332 
+CREATE VIEW THANKS_IN_COMPANY AS (
+    SELECT t.tid
+         , m.message_text
+         , t.to
+         , t."from"
+         , cv.value_type
+    FROM company as c
+        INNER JOIN department AS d ON c.cid = d.cid
+        INNER JOIN employee AS e ON e.did = d.did
+        INNER JOIN thanks AS t ON t.to = e.eid
+        INNER JOIN message AS m ON t.mid = m.mid
+        INNER JOIN company_value as cv ON t.vid = cv.vid
+)
+
+--
+-- TABLE: COMMENT
 --
 
-CREATE INDEX Ref332 ON DEPARTMENT(cid)
-;
--- 
--- INDEX: Ref148 
---
-
-CREATE INDEX Ref148 ON DEPARTMENT_HEAD(headid)
-;
--- 
--- INDEX: Ref430 
---
-
-CREATE INDEX Ref430 ON EMPLOYEE(did)
-;
--- 
--- INDEX: Ref147 
---
-
-CREATE INDEX Ref147 ON EXECUTIVE(execid)
-;
--- 
--- INDEX: Ref328 
---
-
-CREATE INDEX Ref328 ON EXECUTIVE(cid)
-;
--- 
--- INDEX: Ref719 
---
-
-CREATE INDEX Ref719 ON LIKE(likeid, mid)
-;
--- 
--- INDEX: Ref617 
---
-
-CREATE INDEX Ref617 ON THANKS(vid)
-;
--- 
--- INDEX: Ref1422 
---
-
-CREATE INDEX Ref1422 ON THANKS(to)
-;
--- 
--- INDEX: Ref1424 
---
-
-CREATE INDEX Ref1424 ON THANKS(from)
-;
--- 
--- INDEX: Ref531 
---
-
-CREATE INDEX Ref531 ON THANKS(mid)
-;
--- 
--- TABLE: COMMENT 
---
-
-ALTER TABLE COMMENT ADD CONSTRAINT RefTHANKS20 
+ALTER TABLE COMMENT ADD CONSTRAINT RefTHANKS20
     FOREIGN KEY (commentid, mid)
     REFERENCES THANKS(tid, mid)
 ;
 
 
--- 
--- TABLE: DEPARTMENT 
+--
+-- TABLE: COMPANY_VALUE
 --
 
-ALTER TABLE DEPARTMENT ADD CONSTRAINT RefDEPARTMENT_HEAD29 
-    FOREIGN KEY (headid)
-    REFERENCES DEPARTMENT_HEAD(headid)
-;
-
-ALTER TABLE DEPARTMENT ADD CONSTRAINT RefCOMPANY32 
+ALTER TABLE COMPANY_VALUE ADD CONSTRAINT RefCOMPANY33
     FOREIGN KEY (cid)
     REFERENCES COMPANY(cid)
 ;
 
 
--- 
--- TABLE: DEPARTMENT_HEAD 
+--
+-- TABLE: DEPARTMENT
 --
 
-ALTER TABLE DEPARTMENT_HEAD ADD CONSTRAINT RefEMPLOYEE8 
-    FOREIGN KEY (headid)
-    REFERENCES EMPLOYEE(eid)
+ALTER TABLE DEPARTMENT ADD CONSTRAINT RefCOMPANY32
+    FOREIGN KEY (cid)
+    REFERENCES COMPANY(cid)
 ;
 
 
--- 
--- TABLE: EMPLOYEE 
+--
+-- TABLE: EMPLOYEE
 --
 
-ALTER TABLE EMPLOYEE ADD CONSTRAINT RefDEPARTMENT30 
+ALTER TABLE EMPLOYEE ADD CONSTRAINT RefDEPARTMENT30
     FOREIGN KEY (did)
     REFERENCES DEPARTMENT(did)
 ;
 
 
--- 
--- TABLE: EXECUTIVE 
+--
+-- TABLE: LIKE
 --
 
-ALTER TABLE EXECUTIVE ADD CONSTRAINT RefEMPLOYEE7 
-    FOREIGN KEY (execid)
-    REFERENCES EMPLOYEE(eid)
-;
-
-ALTER TABLE EXECUTIVE ADD CONSTRAINT RefCOMPANY28 
-    FOREIGN KEY (cid)
-    REFERENCES COMPANY(cid)
-;
-
-
--- 
--- TABLE: LIKE 
---
-
-ALTER TABLE LIKE ADD CONSTRAINT RefTHANKS19 
+ALTER TABLE LIKE ADD CONSTRAINT RefTHANKS19
     FOREIGN KEY (likeid, mid)
     REFERENCES THANKS(tid, mid)
 ;
 
 
--- 
--- TABLE: THANKS 
+--
+-- TABLE: THANKS
 --
 
-ALTER TABLE THANKS ADD CONSTRAINT RefCOMPANY_VALUE17 
-    FOREIGN KEY (vid)
-    REFERENCES COMPANY_VALUE(vid)
+ALTER TABLE THANKS ADD CONSTRAINT RefCOMPANY_VALUE17
+    FOREIGN KEY (vid, cid)
+    REFERENCES COMPANY_VALUE(vid, cid)
 ;
 
-ALTER TABLE THANKS ADD CONSTRAINT RefEMPLOYEE22 
+ALTER TABLE THANKS ADD CONSTRAINT RefEMPLOYEE22
     FOREIGN KEY (to)
     REFERENCES EMPLOYEE(eid)
 ;
 
-ALTER TABLE THANKS ADD CONSTRAINT RefEMPLOYEE24 
+ALTER TABLE THANKS ADD CONSTRAINT RefEMPLOYEE24
     FOREIGN KEY (from)
     REFERENCES EMPLOYEE(eid)
 ;
 
-ALTER TABLE THANKS ADD CONSTRAINT RefMESSAGE31 
+ALTER TABLE THANKS ADD CONSTRAINT RefMESSAGE31
     FOREIGN KEY (mid)
     REFERENCES MESSAGE(mid)
 ;
