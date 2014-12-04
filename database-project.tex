@@ -376,136 +376,187 @@ value\_type                              & COMPANY\_VALUE                       
 \section{Database Definition}
 \verbatiminput{sql/ThanksCorporation.sql}
 \section{Database Queries}
-Given below are 11 example English queries, with their SQL DML used to retrieve the necessary data.
+Given below are 14 example English queries, with their SQL DML used to retrieve the necessary data.
 \begin{enumerate}
     \item List the names of all employees in the company ``I Love Thanks".
     \begin{verbatim}
-    SELECT e.name
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN employee as e
-    ON d.did = e.did
-    WHERE c.cTitle = "I Love Thanks"
+    SELECT name
+    FROM   EMPLOYEES_IN_COMPANY
+    WHERE  cTitle = "I Love Thanks"
     ;
     \end{verbatim}
     \item Show all department names in the corporation ``Blitz''.
     \begin{verbatim}
     SELECT d.depTitle
-    FROM company AS c
-    INNER JOIN department as d
-    ON c.cid = d.cid
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
     WHERE c.cTitle = "Blitz"
     ;
     \end{verbatim}
     \item Return a list of all employees in the database who have nicknames.
     \begin{verbatim}
-    SELECT e.name, e.nickname
-    FROM employee AS e
-    WHERE EXISTS (
-        SELECT e.nickname
-        FROM employee
-    )
+    SELECT e.nickname, e.name
+    FROM EMPLOYEE AS e
+    WHERE e.nickname IS NOT NULL
     ;
     \end{verbatim}
     \item Show names of employees who do not have photos in the ``I Love Thanks" company.
     \begin{verbatim}
     SELECT e.name
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN employee as e
-    ON d.did = e.did
-    WHERE c.photo IS NULL
-    AND c.cTitle = "I Love Thanks"
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+        INNER JOIN EMPLOYEE   AS e ON d.did = e.did
+    WHERE e.photo IS NULL
+        AND c.cTitle = "I Love Thanks"
     ;
     \end{verbatim}
-    \item Show all department heads in ``Insomniac Corporation''.
+    \item Show all comments on Julia Crow's Thanks to Richard Baker on January 2, 2011.
     \begin{verbatim}
-    SELECT dh
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN department_head as dh
-    ON d.headid = dh.headid
-    WHERE c.cTitle = "Insomniac Corporation"
+    SELECT commentdate, comment_data
+    FROM COMMENT
+    WHERE tid = (
+        SELECT t.tid
+        FROM THANKS_IN_COMPANY AS t
+        WHERE t.to = (
+            SELECT eid
+            FROM   EMPLOYEES_IN_COMPANY
+            WHERE  name = "Richard Baker"
+        )
+        AND t.from = (
+            SELECT eid
+            FROM   EMPLOYEES_IN_COMPANY
+            WHERE  name = "Julia Crow"
+        )
+        AND t.thanksdate = "2011-1-2"
+    )
     ;
     \end{verbatim}
-    \item Show all of the Thanks that Julia Crow from ``Playa Medical'' gave.
+    \item Show all of the Thanks that Julia Crow from ``First America'' gave.
     \begin{verbatim}
-    SELECT t
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN employee as e
-    ON d.did = e.did
-    INNER JOIN thanks as t
-    ON t.from = e.eid
-    WHERE c.cTitle = "Playa Medical"
-    AND e.name = "Julia Crow"
-    ;
-    \end{verbatim}
-    \item Show all of the Thanks that Emma Cross from ``Boeing'' received.
-    \begin{verbatim}
-    SELECT t
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN employee as e
-    ON d.did = e.did
-    INNER JOIN thanks as t
-    ON t.from = e.eid
-    WHERE c.cTitle = "Boeing"
-    AND e.name = "Julia Crow"
-    ;
-    \end{verbatim}
-    \item Show all thanks that have been given in the corporation ``First America''.
-    \begin{verbatim}
-    SELECT t
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN employee as e
-    ON d.did = e.did
-    INNER JOIN thanks as t
-    ON t.to = e.eid
+    SELECT e.name, t.`to`, m.message_text
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT AS d ON c.cid    = d.cid
+        INNER JOIN EMPLOYEE   AS e ON d.did    = e.did
+        INNER JOIN THANKS     AS t ON t.`from` = e.eid
+        INNER JOIN MESSAGE    AS m ON t.mid    = m.mid
     WHERE c.cTitle = "First America"
+        AND e.name = "Julia Crow"
+    ;
+    \end{verbatim}
+    \item Show all of the Thanks that Emma Cross from ``Lightning Corporation'' received.
+    \begin{verbatim}
+    SELECT e.name, t.`from`, m.message_text
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT AS d ON c.cid  = d.cid
+        INNER JOIN EMPLOYEE   AS e ON d.did  = e.did
+        INNER JOIN THANKS     AS t ON t.`to` = e.eid
+        INNER JOIN MESSAGE    AS m ON t.mid  = m.mid
+    WHERE c.cTitle = "Lightning Corporation"
+        AND e.name = "Emma Cross"
+    ;
+    \end{verbatim}
+    \item Show all thanks that have been given in the corporation ``First America'' before 2013.
+    \begin{verbatim}
+    SELECT t.to, t.from, m.message_text, t.thanksdate, cv.value_type
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT    AS d  ON c.cid  = d.cid
+        INNER JOIN EMPLOYEE      AS e  ON d.did  = e.did
+        INNER JOIN THANKS        AS t  ON t.`to` = e.eid
+        INNER JOIN COMPANY_VALUE AS cv ON t.vid  = cv.vid
+        INNER JOIN MESSAGE       AS m  ON t.mid  = m.mid
+    WHERE c.cTitle = "First America"
+        AND t.thanksdate < '2013-1-1'
+    ;
+    \end{verbatim}
+    \item List the company values of ``Blitz''.
+    \begin{verbatim}
+    SELECT cv.value_type
+    FROM   COMPANY AS c
+        INNER JOIN COMPANY_VALUE as cv on c.cid = cv.cid
+    WHERE  c.cTitle = "Blitz"
     ;
     \end{verbatim}
     \item Who is the newest employee to have joined the company ``Lightning Corporation''?
     \begin{verbatim}
     SELECT e.name
-    FROM company as c
-    INNER JOIN department as d
-    ON c.cid = d.cid
-    INNER JOIN employee as e
-    ON d.did = e.did
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+        INNER JOIN EMPLOYEE   AS e ON d.did = e.did
     WHERE c.cTitle = "Lightning Corporation"
-    AND e.started = (
-        SELECT MAX(e.started)
-        FROM company as c
-        INNER JOIN department as d
-        ON c.cid = d.cid
-        INNER JOIN employee as e
-        ON d.did = e.eid
-        WHERE c.cTitle = "Lightning Corporation"
-    )
+        AND e.started = (
+            SELECT MAX(e.started)
+            FROM COMPANY AS c
+                INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+                INNER JOIN EMPLOYEE   AS e ON d.did = e.did
+            WHERE c.cTitle = "Lightning Corporation"
+        )
     ;
     \end{verbatim}
-    \item List all thanks posted in the database in October.
+    \item List all Thanks ``I Love Thanks'' employees gave in October 2011.
     \begin{verbatim}
-    SELECT t
-    FROM thanks as t
+    SELECT t.to, t.from, m.message_text, t.thanksdate, cv.value_type
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT    AS d  ON c.cid  = d.cid
+        INNER JOIN EMPLOYEE      AS e  ON d.did  = e.did
+        INNER JOIN THANKS        AS t  ON t.`to` = e.eid
+        INNER JOIN COMPANY_VALUE AS cv ON t.vid  = cv.vid
+        INNER JOIN MESSAGE       AS m  ON t.mid  = m.mid
     WHERE MONTHNAME(t.thanksdate) = "October"
+        AND YEAR(t.thanksdate) = 2011
     ;
     \end{verbatim}
-    \item List the executives in the company ``I Love Thanks".
+    \item Find the name of the employee who received the most Thanks in ``Blitz''.
     \begin{verbatim}
-    SELECT e
-    FROM company as c
-    INNER JOIN executive as e
-    ON c.cid = e.cid
-    WHERE c.cTitle = "I Love Thanks"
+    SELECT e.name
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+        INNER JOIN EMPLOYEE   AS e ON d.did = e.did
+        INNER JOIN THANKS     AS t ON t.to  = e.eid
+    WHERE c.cTitle = "Blitz"
+        AND t.to = (
+            SELECT `to` FROM (
+                SELECT `to`, count(`to`) AS counted
+                FROM COMPANY AS c
+                    INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+                    INNER JOIN EMPLOYEE   AS e ON d.did = e.did
+                    INNER JOIN THANKS     AS t ON t.to  = e.eid
+                WHERE c.cTitle = "Blitz"
+                GROUP BY `to`
+                ORDER BY counted DESC
+                LIMIT 1
+            ) as received_most_thanks
+        )
+        GROUP BY `to`
+    ;
+    \end{verbatim}
+    \item Find the average number of likes each Thanks in the corporation ``Blitz'' received in 2011.
+    \begin{verbatim}
+    SELECT AVG(avg.counter)
+    FROM (
+        SELECT l.tid, count(l.likeid) as counter
+        FROM COMPANY AS c
+            INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
+            INNER JOIN EMPLOYEE   AS e ON d.did = e.did
+            INNER JOIN THANKS     AS t ON t.to  = e.eid
+            INNER JOIN `LIKE`     AS l ON t.tid = l.tid
+        WHERE c.cTitle = "Blitz"
+        AND   YEAR(t.thanksdate) = 2011
+        GROUP BY l.tid
+    ) AS avg
+    ;
+    \end{verbatim}
+    \item Find the most awarded company value in ``Blitz''.
+    \begin{verbatim}
+    SELECT cv.value_type
+    FROM COMPANY AS c
+        INNER JOIN DEPARTMENT    AS d  ON c.cid = d.cid
+        INNER JOIN EMPLOYEE      AS e  ON d.did = e.did
+        INNER JOIN THANKS        AS t  ON e.eid = t.to
+        INNER JOIN COMPANY_VALUE AS cv ON t.vid = cv.vid
+    WHERE c.cTitle = "Blitz"
+    GROUP BY value_type
+    ORDER BY COUNT(VALUE_TYPE) DESC
+    LIMIT 1
     ;
     \end{verbatim}
 \end{enumerate}
