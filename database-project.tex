@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{verbatim}
+\usepackage{pdfpages}
 \title{Thanks Corporation Database Project\\CMSI 486 Enterprise Project\\Fall 2014}
 \author{Edward Bramanti}
 \date{This project designs and implements a database for an employee recognition system for companies to use internally.}
@@ -39,14 +40,14 @@ Thanks is an effective, entirely digital, multi-purpose employee recognition sys
 
 The enterprise in question will make it much easier for employees to recognize one another across their company. As companies grow, it becomes difficult to maintain an atmosphere of employee worth. This growing size represents a problem as individual employees can feel like their work goes unnoticed in their company. “Thanks” provides a remedy for that by providing a digital way to send recognition to any employee quickly.
 
-In an organization, there will be one user type with some special attributes. For example, an executive will be a special user type and will be denoted with special attributes. When opening the thanks form, it will be necessary to present a list of all employees in the company. A list of employees would appear with these attributes: name, position and department. This would provide employees with a clear snapshot on everyone’s role in the company if they saw a fellow employee do something amazing and was not sure what position they occupied in the company. Users will be able to send other users the primary data type known as Thanks. For each thank, we have a user that gives the Thanks and a user that receives the Thanks. This demonstrates the personal aspect of recognition, as an employee recognizes a specific employee directly.
+When opening the thanks form, it will be necessary to present a list of all employees in the company. A list of employees would appear with these attributes: name, position and department. If they saw a fellow employee do something, they should not feel uncertain about what position that employee currently occupies. One of the major goals of Thanks is to help people recognize each other regardless of rank in the company and title. Informing users about a person's job title will provide clarity into who they are thanking and their role in the organization. Users will be able to send other users the primary data type known as Thanks. For each thank, we have a user that gives the Thanks and a user that receives the Thanks. This demonstrates the personal aspect of recognition, as an employee recognizes a specific employee directly.
 
 A Thanks also contains an area for an employee to write a message so they can explain what they are thanking the employee for. This allows for personalization of the Thanks so that employees can be detailed on the outstanding work their coworkers are doing. Finally, companies will be able to define a custom attribute for the last part of the Thanks, which will be represented as values the company wants to promote. The advantage of this value is that companies, depending on their mission statements and core beliefs, will be able to tailor this field to encourage specific attributes that represent the company within employees.
 
 Thanks represents a social network within a company than it is a private thanking system. Messages will display on a live feed all of the “Thanks” being given around the company. Employees will be able to easily see the interaction and encouragement being spread amongst their acquaintances. The potential of “Thanks” is enormous, which is why a specific structure around a public space of thanks combined with personalized instances and explanations of employee worth are necessary in this database design.\\
 
 \clearpage
-Here are a set of questions employees, department heads or executives may pose when retrieving data:
+Here are a set of questions employees may pose when retrieving data:
 \begin{enumerate}
     \item List the names of all employees in the company.
     \item Which department has received the most Thanks in the company?
@@ -57,7 +58,7 @@ Here are a set of questions employees, department heads or executives may pose w
     \item Who has never received a Thanks within a company?
     \item Who is the newest employee to have joined the company?
     \item What Thanks were posted in the database on October 20, 2014?
-    \item List the executives in the company.
+    \item List the most awarded company value.
 \end{enumerate}
 
 \chapter{Definition of Environment}
@@ -219,10 +220,13 @@ thanks\_feed                         &             & \multicolumn{1}{c|}{}      
     \end{itemize}
 \item Like
     \begin{itemize}
+    \item likeid: Like ID
     \item likedate: Date Like was Given
     \end{itemize}
 \item Comment
     \begin{itemize}
+    \item commentid: Comment ID
+    \item comment\_data: Comment Message
     \item commentdate: Date Comment was Given
     \end{itemize}
 \item Message
@@ -250,9 +254,9 @@ CK - to\\
 CK - from\\
 \item THANKS\_MESSAGE(\underline{tid},mid) \\
 CK - tid\\
-\item THANKS\_LIKE(\underline{likeid},mid) \\
+\item THANKS\_LIKE(\underline{likeid},tid) \\
 CK - likeid\\
-\item THANKS\_COMMENT(\underline{commentid},mid) \\
+\item THANKS\_COMMENT(\underline{commentid},tid) \\
 CK - commentid\\
 \item THANKS\_VALUE(\underline{thanks.vid},company\_value.vid) \\
 CK - thanks.vid\\
@@ -297,15 +301,15 @@ FK - thanks.mid REFERENCES message.mid \\
      thanks.from REFERENCES employee.eid \\
      thanks.vid REFERENCES company\_value.vid \\
 
-like(\underline{(likeid, mid)}, likedate) \\
-PK - (likeid, mid) \\
+like(\underline{(likeid, tid)}, likedate) \\
+PK - (likeid, tid) \\
 CK - likeid \\
-FK - like.mid REFERENCES message.mid \\
+FK - like.tid REFERENCES thanks.tid \\
 
-comment(\underline{(commentid, mid)}, commentdate) \\
-PK - (commentid, mid) \\
+comment(\underline{(commentid, tid)}, comment\_data, commentdate) \\
+PK - (commentid, tid) \\
 CK - commentid \\
-FK - comment.mid REFERENCES message.mid \\
+FK - comment.tid REFERENCES thanks.tid \\
 
 message(\underline{mid}, message\_text) \\
 PK - mid \\
@@ -320,7 +324,7 @@ FK - company\_value.cid REFERENCES company.cid
 \begin{table}[h]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
 
 \hline
 \multicolumn{1}{|c|}{\textbf{Table}} & \multicolumn{1}{c|}{\textbf{Attributes}}                            & \multicolumn{1}{c|}{\textbf{Definition}}               \\ \hline
@@ -328,10 +332,12 @@ COMPANY                              & cid, cTitle, founded\_date               
 DEPARTMENT                           & did, depTitle, depDescription, headid, cid                          & Department in a company                                \\ \hline
 EMPLOYEE                             & \underline{eid}, name, job\_title, photo, nickname, started, did    & Employee in a company                                  \\ \hline
 THANKS                               & tid, thanksdate                                                     & Data type used to recognize another employee           \\ \hline
-LIKE                                 & likeid, mid, likedate                                               & A like on a Thanks post                                \\ \hline
-COMMENT                              & commentid, mid, commentdate                                         & A comment on a Thanks post                             \\ \hline
+LIKE                                 & likeid, tid, likedate                                               & A like on a Thanks post                                \\ \hline
+COMMENT                              & commentid, tid, commentdate, comment\_data                              & A comment on a Thanks post                             \\ \hline
 MESSAGE                              & mid, message\_text                                                  & Message of a Thanks                                    \\ \hline
 COMPANY\_VALUE                       & vid, value\_type                                                    & Company value of a Thanks                              \\ \hline
+EMPLOYEES\_IN\_COMPANY               & eid, cid, name, cTitle, job\_title, photo, nickname, started                                                    & View of employees and their respective companies                              \\ \hline
+THANKS\_IN\_COMPANY                  & tid, message\_text, to, from, thanksdate, value\_type                                                   & View of Thanks and their respective attributes                             \\ \hline
 \end{tabular}
 }
 \end{table}
@@ -344,28 +350,29 @@ COMPANY\_VALUE                       & vid, value\_type                         
 
 \hline
 \multicolumn{1}{|c|}{\textbf{Attribute}} & \multicolumn{1}{c|}{\textbf{Tables Used In}} & \multicolumn{1}{c|}{\textbf{Description}}        \\ \hline
-eid                                      & EMPLOYEE                                     & Unique identifier of an employee                 \\ \hline
-name                                     & EMPLOYEE                                     & Name of an employee                              \\ \hline
-job\_title                               & EMPLOYEE                                     & Job title of employee                            \\ \hline
-photo                                    & EMPLOYEE                                     & Photo of employee                                \\ \hline
-nickname                                 & EMPLOYEE                                     & Nickname of employee                             \\ \hline
-started                                  & EMPLOYEE                                     & Date that the employee started at their company  \\ \hline
+eid                                      & EMPLOYEE, EMPLOYEES\_IN\_COMPANY             & Unique identifier of an employee                 \\ \hline
+name                                     & EMPLOYEE, EMPLOYEES\_IN\_COMPANY             & Name of an employee                              \\ \hline
+job\_title                               & EMPLOYEE, EMPLOYEES\_IN\_COMPANY             & Job title of employee                            \\ \hline
+photo                                    & EMPLOYEE, EMPLOYEES\_IN\_COMPANY             & Photo of employee                                \\ \hline
+nickname                                 & EMPLOYEE, EMPLOYEES\_IN\_COMPANY             & Nickname of employee                             \\ \hline
+started                                  & EMPLOYEE, EMPLOYEES\_IN\_COMPANY             & Date that the employee started at their company  \\ \hline
 did                                      & DEPARTMENT                                   & Unique identifier of the department of a company \\ \hline
 depTitle                                 & DEPARTMENT                                   & Name (title) of the department                   \\ \hline
 depDescription                           & DEPARTMENT                                   & Description of the department                    \\ \hline
-cid                                      & COMPANY                                      & Unique identifier of a company                   \\ \hline
-cTitle                                   & COMPANY                                      & Name (title) of a company                        \\ \hline
+cid                                      & COMPANY, EMPLOYEES\_IN\_COMPANY              & Unique identifier of a company                   \\ \hline
+cTitle                                   & COMPANY, EMPLOYEES\_IN\_COMPANY              & Name (title) of a company                        \\ \hline
 founded\_date                            & COMPANY                                      & Date a company was founded                       \\ \hline
-tid                                      & THANKS                                       & Unique identifier of a Thanks                    \\ \hline
-thanksdate                               & THANKS                                       & Date the Thanks was given                        \\ \hline
+tid                                      & THANKS, THANKS\_IN\_COMPANY                  & Unique identifier of a Thanks                    \\ \hline
+thanksdate                               & THANKS, THANKS\_IN\_COMPANY                  & Date the Thanks was given                        \\ \hline
 likeid                                   & LIKE                                         & Unique identifier of a like on a Thanks          \\ \hline
 likedate                                 & LIKE                                         & Date the like was given                          \\ \hline
 commentid                                & COMMENT                                      & Unique identifier of a comment                   \\ \hline
+comment\_data                            & COMMENT                                      & Message of comment                    \\ \hline
 commentdate                              & COMMENT                                      & Date the comment was added to the Thanks         \\ \hline
 mid                                      & MESSAGE                                      & Unique identifier of the message of a Thanks     \\ \hline
-message\_text                            & MESSAGE                                      & Body text of the message of a Thanks             \\ \hline
+message\_text                            & MESSAGE, THANKS\_IN\_COMPANY                 & Body text of the message of a Thanks             \\ \hline
 vid                                      & COMPANY\_VALUE                               & Unique identifier of a company value             \\ \hline
-value\_type                              & COMPANY\_VALUE                               & Name (type) of company value                     \\ \hline
+value\_type                              & COMPANY\_VALUE, THANKS\_IN\_COMPANY          & Name (type) of company value                     \\ \hline
 \end{tabular}
 }
 \end{table}
@@ -560,14 +567,11 @@ Given below are 14 example English queries, with their SQL DML used to retrieve 
     ;
     \end{verbatim}
 \end{enumerate}
-\clearpage
 \section{Design Tradeoffs and Limitations}
 
-One design tradeoff in its current state is the lack of Thanks being tied to the company. In order to gain access to all thanks by company, multiple joins must be performed instead of having a relationship directly between company and the thanks given within a company. This may be remedied in the future by adding a relationship between THANKS and COMPANY.\\
+One of the biggest design tradeoffs is that an employee can only be associated with one company. This can become difficult if an employee leaves a company and wants to take their data with them to a new company. An example of this can be seen more clearly when the attribute ``started'' is taken into account. If an employee is starting in a new position, this date has to change and is no longer preserved. However, since the idea of Thanks Corporation is to maintain a private way to share Thanks within a company, this seemed to be a fair tradeoff. The ``started'' example is a more difficult limitation of the database, but necessary without another entity. \\
 
-Another design tradeoff is the lack of relationship between COMPANY and COMPANY\_VALUE. This issue is very similar to the tradeoff listed above: multiple joins are required in order to get the COMPANY\_VALUE when a relationship could be tied between COMPANY and COMPANY\_VALUE.\\
-
-Finally, one design difficulty was in how employees are linked to thanks. Two foreign keys are required in a Thanks entity, which have been aliased to `to' and `from'. Both of these reference an employee, and can create difficulty due to the aliasing of the foreign keys. However, this is necessary in the current implementation.
+Another tradeoff of the database is the lack of multiple job titles. Multiple photos are also not allowed, so if transferring between companies were ever a feature in the future, these would not work in a future implementation. Another design limitation is the lack of Thanks being given between corporations. Since I wanted to keep the database as small communities of corporations rather than one large social network, it seemed to be the right tradeoff.
 \clearpage
 
 \chapter{Database Integrity and Security}
@@ -579,7 +583,7 @@ Finally, one design difficulty was in how employees are linked to thanks. Two fo
 \item eid $\rightarrow$ name, job\_title, photo, nickname, started
 \item tid $\rightarrow$ thanksdate
 \item likeid $\rightarrow$ likedate
-\item commentid $\rightarrow$ commentdate
+\item commentid $\rightarrow$ comment\_data, commentdate
 \item mid $\rightarrow$ message\_text
 \item vid $\rightarrow$ value\_type
 \end{itemize}
@@ -603,6 +607,7 @@ There will multiple types of access privileges to the database. These access typ
 MySQL does not directly provide assertions, however triggers have been used to provide assertion-like functionality in MySQL. Assertions the Thanks Corporation needs are listed below.
     \begin{itemize}
     \item Determine whether an employee giving a Thanks with a company value is using a company value from the employee's own company.
+    % \item Determine whether an employee name being inserted already exists within the company.
     \end{itemize}
 \item Views \\
 Two views are utilized in this database.
@@ -616,8 +621,13 @@ Two views are utilized in this database.
 \clearpage
 \chapter{Implementation Notes}
 \section{Indices}
+Refer to section IV.1 for a list of used indices.
 \section{Data}
+\verbatiminput{sql/ThanksCorpDataLoad.sql}
 \section{Query Trace}
+A query trace is found on the next page.
+\includepdf[pages={1-8}]{query-trace.pdf}
 \section{Implementation Assessment}
-
+I had to adjust some of the data types, as my primary keys were not autoincrementing when I inserted new data. I also switched datetime to date for a few data types in order to maintain some consistency. Finally, I modified a database relation since it was conflicting with what I wanted. Overall, after those fixes all of the implementations went smoothly and I was able to get my query trace up and running quickly.
+\chapter{Lessons Learned}
 \end{document}
