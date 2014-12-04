@@ -11,10 +11,11 @@
 --
 
 CREATE TABLE COMMENT(
-    commentid      INT            NOT NULL AUTO_INCREMENT,
-    mid            INT            NOT NULL,
-    commentdate    DATETIME       NOT NULL,
-    PRIMARY KEY (commentid, mid)
+    commentid       INT            NOT NULL AUTO_INCREMENT,
+    tid             INT            NOT NULL,
+    commentdate     DATE           NOT NULL,
+    comment_data    VARCHAR(255)   NOT NULL,
+    PRIMARY KEY (commentid, tid)
 )ENGINE=INNODB
 ;
 
@@ -27,7 +28,7 @@ CREATE TABLE COMMENT(
 CREATE TABLE COMPANY(
     cid             INT            NOT NULL AUTO_INCREMENT,
     cTitle          VARCHAR(30)    NOT NULL,
-    founded_date    DATETIME       NOT NULL,
+    founded_date    DATE           NOT NULL,
     PRIMARY KEY (cid)
 )ENGINE=INNODB
 ;
@@ -54,7 +55,7 @@ CREATE TABLE COMPANY_VALUE(
 
 CREATE TABLE DEPARTMENT(
     did               INT             NOT NULL AUTO_INCREMENT,
-    depTitle          VARCHAR(30),
+    depTitle          VARCHAR(30)     NOT NULL,
     depDescription    VARCHAR(255),
     cid               INT             NOT NULL,
     PRIMARY KEY (did)
@@ -74,7 +75,7 @@ CREATE TABLE EMPLOYEE(
     job_title    VARCHAR(30)    NOT NULL,
     photo        VARCHAR(30),
     nickname     VARCHAR(30),
-    started      DATETIME       NOT NULL,
+    started      DATE           NOT NULL,
     did          INT,
     PRIMARY KEY (eid)
 )ENGINE=INNODB
@@ -88,9 +89,9 @@ CREATE TABLE EMPLOYEE(
 
 CREATE TABLE `LIKE`(
     likeid      INT            NOT NULL AUTO_INCREMENT,
-    mid         INT            NOT NULL,
+    tid         INT            NOT NULL,
     likedate    DATETIME       NOT NULL,
-    PRIMARY KEY (likeid, mid)
+    PRIMARY KEY (likeid, tid)
 )ENGINE=INNODB
 ;
 
@@ -153,6 +154,7 @@ CREATE VIEW THANKS_IN_COMPANY AS (
          , m.message_text
          , t.`to`
          , t.`from`
+         , t.thanksdate
          , cv.value_type
     FROM COMPANY as c
         INNER JOIN DEPARTMENT AS d ON c.cid = d.cid
@@ -168,8 +170,8 @@ CREATE VIEW THANKS_IN_COMPANY AS (
 --
 
 ALTER TABLE COMMENT ADD CONSTRAINT RefTHANKS20
-    FOREIGN KEY (commentid, mid)
-    REFERENCES THANKS(tid, mid)
+    FOREIGN KEY (tid)
+    REFERENCES THANKS(tid)
 ;
 
 
@@ -208,8 +210,8 @@ ALTER TABLE EMPLOYEE ADD CONSTRAINT RefDEPARTMENT30
 --
 
 ALTER TABLE `LIKE` ADD CONSTRAINT RefTHANKS19
-    FOREIGN KEY (likeid, mid)
-    REFERENCES THANKS(tid, mid)
+    FOREIGN KEY (tid)
+    REFERENCES THANKS(tid)
 ;
 
 
