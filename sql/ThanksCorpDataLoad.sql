@@ -64,29 +64,24 @@ INSERT INTO DEPARTMENT(depTitle, depDescription, cid) VALUES
 ("Technology", "We build the apps for Blitz.", 1),
 ("Creative", "The brain of the operation", 1),
 ("Communications", "We communicate well with others.", 1),
---
 ("Thanks1", "Thanks Department 1", 2),
 ("Thanks2", "Thanks Department 2", 2),
 ("Thanks3", "Thanks Department 3", 2),
 ("Thanks4", "Thanks Department 4", 2),
---
 ("Board", "Board of the Hospital", 3),
 ("Outpatient", "Outpatient Team", 3),
 ("Inpatient", "Inpatient Team", 3),
 ("ER", "Emergency Room Team", 3),
---
 ("Car Loan", "Giving people wheels.", 4),
 ("Home Loan", "Giving people homes.", 4),
 ("Banking", "Banking section of First America", 4),
 ("Mutual Funds", "Mutual Funds of First America", 4),
---
 ("Electricity", "We power this company.", 5),
 ("Human Relations", "HR Department of Lightning Corporation", 5),
 ("Power", "We humbly thank Electricity", 5),
 ("Thunder", "Lightning's Best Friend", 5)
 ;
 
--- Starts at 21
 INSERT INTO DEPARTMENT(depTitle, cid) VALUES
 ("Strategy", 1),
 ("Thanks5", 2),
@@ -165,14 +160,9 @@ INSERT INTO EMPLOYEE(name, job_title, started, did) VALUES
 ("Stanley Stewart", "Main Strategy Officer", "2010-2-11", 21),
 ("Jane Flores", "Thanks Associate", "2005-3-10", 22),
 ("Fred Morris", "Front Desk", "2007-10-10", 23),
--- Query Specific Names
 ("Julia Crow", "Assistant CEO", "1993-7-17", 24),
 ("Emma Cross", "Executive Lightning Specialist", "2013-1-1", 25)
 ;
-
---
--- TABLE: MESSAGE
---
 
 CREATE TABLE IF NOT EXISTS MESSAGE(
     mid             INT           NOT NULL AUTO_INCREMENT,
@@ -209,10 +199,6 @@ INSERT INTO MESSAGE(message_text) VALUES
 ("Thoroughly impressed with your work.")
 ;
 
---
--- TABLE: THANKS
---
-
 CREATE TABLE IF NOT EXISTS THANKS(
     tid           INT            NOT NULL AUTO_INCREMENT,
     mid           INT            NOT NULL,
@@ -226,44 +212,32 @@ CREATE TABLE IF NOT EXISTS THANKS(
 ;
 
 INSERT INTO THANKS(mid, `to`, `from`, vid, thanksdate, cid) VALUES
--- Emma Cross
 (1, 50, 25, 17, "2010-1-2", 5),
 (2, 50, 10, 17, "2010-5-6", 5),
 (3, 50, 45, 18, "2010-11-1", 5),
--- Julia Crow
-(4, 34, 49, 14, "2011-1-2", 4), -- Comment query
+(4, 34, 49, 14, "2011-1-2", 4),
 (5, 24, 49, 15, "2012-1-1", 4),
--- First America < 2011
 (6, 39, 19, 16, "2012-2-4", 4),
 (7, 4, 9, 13, "2012-12-31", 4),
--- I Love Thanks -> October 2011
 (8, 2, 12, 5, "2011-10-1", 2),
 (9, 12, 2, 6, "2011-10-2", 2),
--- Blitz most awarded company value
 (10, 1, 6, 1, "2013-2-4", 1),
 (11, 1, 36, 1, "2014-1-1", 1),
 (12, 1, 41, 1, "2012-2-2", 1),
 (13, 41, 36, 1, "2014-2-3", 1),
 (14, 6, 1, 1, "2010-1-2", 1),
--- Employee who received most Thanks in Blitz
 (15, 11, 1, 2, "2010-2-10", 1),
 (16, 11, 16, 3, "2009-1-3", 1),
 (17, 11, 21, 4, "2008-5-19", 1),
 (18, 11, 11, 2, "2010-12-31", 1),
--- 2011 Thanks Average Likes Blitz
 (19, 6, 16, 2, "2011-1-1", 1),
 (20, 16, 6, 3, "2011-1-2", 1),
 (21, 36, 41, 4, "2011-1-3", 1),
 (22, 16, 11, 2, "2011-1-4", 1),
--- Random Thanks in Playa Medical
 (23, 38, 22, 9, "2011-1-5", 3),
 (24, 18, 38, 10, "2011-1-6", 3),
 (25, 8, 18, 11, "2010-2-2", 3)
 ;
-
---
--- TABLE: LIKE
---
 
 CREATE TABLE IF NOT EXISTS `LIKE`(
     likeid      INT            NOT NULL AUTO_INCREMENT,
@@ -274,7 +248,6 @@ CREATE TABLE IF NOT EXISTS `LIKE`(
 ;
 
 INSERT INTO `LIKE`(tid, likedate) VALUES
--- 2011 Average Likes Blitz
 (19, "2011-2-4"),
 (19, "2011-2-10"),
 (19, "2011-2-23"),
@@ -284,7 +257,6 @@ INSERT INTO `LIKE`(tid, likedate) VALUES
 (21, "2011-9-1"),
 (21, "2011-9-11"),
 (21, "2011-11-2"),
--- Random Likes
 (1, "2013-1-2"),
 (5, "2014-5-6"),
 (7, "2013-2-3"),
@@ -292,10 +264,6 @@ INSERT INTO `LIKE`(tid, likedate) VALUES
 (8, "2011-10-1"),
 (10, "2013-2-4")
 ;
-
---
--- TABLE: COMMENT
---
 
 CREATE TABLE IF NOT EXISTS COMMENT(
     commentid       INT            NOT NULL AUTO_INCREMENT,
@@ -307,11 +275,9 @@ CREATE TABLE IF NOT EXISTS COMMENT(
 ;
 
 INSERT INTO COMMENT(tid, commentdate, comment_data) VALUES
--- Comments on Julia Crow's Thanks to Richard Baker.
 (4, "2011-1-2", "I totally agree!"),
 (4, "2011-1-2", "Such kind words"),
 (4, "2011-1-3", "Yeah! You go!"),
--- Random Comments
 (10, "2013-5-6", "This was a thoughtful thing to say."),
 (10, "2013-5-7", "I second this, keep it up"),
 (14, "2010-1-2", "You're so nice!"),
