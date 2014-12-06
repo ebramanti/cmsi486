@@ -120,7 +120,7 @@ CREATE TABLE THANKS(
     `to`          INT            NOT NULL,
     `from`        INT            NOT NULL,
     vid           INT,
-    thanksdate    DATETIME       NOT NULL,
+    thanksdate    DATE           NOT NULL,
     cid           INT,
     PRIMARY KEY (tid, mid)
 )ENGINE=INNODB
