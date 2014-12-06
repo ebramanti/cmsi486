@@ -36,15 +36,15 @@
 \setcounter{chapter}{2}
 \chapter{Description of the Enterprise}
 
-Thanks is an effective, entirely digital, multi-purpose employee recognition system. The database will consist of many different companies who will pay for a service that makes recognizing employees simple and meaningful. This will allow the Thanks database to be used in a way that is unique to each company using the service.
+\indent Thanks is an effective, entirely digital, multi-purpose employee recognition system. The database will consist of many different companies who will pay for a service that makes recognizing employees simple and meaningful. This will allow the Thanks database to be used in a way that is unique to each company using the service.
 
-The enterprise in question will make it much easier for employees to recognize one another across their company. As companies grow, it becomes difficult to maintain an atmosphere of employee worth. This growing size represents a problem as individual employees can feel like their work goes unnoticed in their company. “Thanks” provides a remedy for that by providing a digital way to send recognition to any employee quickly.
+\indent The enterprise in question will make it much easier for employees to recognize one another across their company. As companies grow, it becomes difficult to maintain an atmosphere of employee worth. This growing size represents a problem as individual employees can feel like their work goes unnoticed in their company. “Thanks” provides a remedy for that by providing a digital way to send recognition to any employee quickly.
 
-When opening the thanks form, it will be necessary to present a list of all employees in the company. A list of employees would appear with these attributes: name, position and department. If they saw a fellow employee do something, they should not feel uncertain about what position that employee currently occupies. One of the major goals of Thanks is to help people recognize each other regardless of rank in the company and title. Informing users about a person's job title will provide clarity into who they are thanking and their role in the organization. Users will be able to send other users the primary data type known as Thanks. For each thank, we have a user that gives the Thanks and a user that receives the Thanks. This demonstrates the personal aspect of recognition, as an employee recognizes a specific employee directly.
+\indent When opening the thanks form, it will be necessary to present a list of all employees in the company. A list of employees would appear with these attributes: name, position and department. If they saw a fellow employee do something, they should not feel uncertain about what position that employee currently occupies. One of the major goals of Thanks is to help people recognize each other regardless of rank in the company and title. Informing users about a person's job title will provide clarity into who they are thanking and their role in the organization. Users will be able to send other users the primary data type known as Thanks. For each thank, we have a user that gives the Thanks and a user that receives the Thanks. This demonstrates the personal aspect of recognition, as an employee recognizes a specific employee directly.
 
-A Thanks also contains an area for an employee to write a message so they can explain what they are thanking the employee for. This allows for personalization of the Thanks so that employees can be detailed on the outstanding work their coworkers are doing. Finally, companies will be able to define a custom attribute for the last part of the Thanks, which will be represented as values the company wants to promote. The advantage of this value is that companies, depending on their mission statements and core beliefs, will be able to tailor this field to encourage specific attributes that represent the company within employees.
+\indent A Thanks also contains an area for an employee to write a message so they can explain what they are thanking the employee for. This allows for personalization of the Thanks so that employees can be detailed on the outstanding work their coworkers are doing. Finally, companies will be able to define a custom attribute for the last part of the Thanks, which will be represented as values the company wants to promote. The advantage of this value is that companies, depending on their mission statements and core beliefs, will be able to tailor this field to encourage specific attributes that represent the company within employees.
 
-Thanks represents a social network within a company than it is a private thanking system. Messages will display on a live feed all of the “Thanks” being given around the company. Employees will be able to easily see the interaction and encouragement being spread amongst their acquaintances. The potential of “Thanks” is enormous, which is why a specific structure around a public space of thanks combined with personalized instances and explanations of employee worth are necessary in this database design.\\
+\indent Thanks represents a social network within a company than it is a private thanking system. Messages will display on a live feed all of the “Thanks” being given around the company. Employees will be able to easily see the interaction and encouragement being spread amongst their acquaintances. The potential of “Thanks” is enormous, which is why a specific structure around a public space of thanks combined with personalized instances and explanations of employee worth are necessary in this database design.\\
 
 \clearpage
 Here are a set of questions employees may pose when retrieving data:
@@ -53,8 +53,8 @@ Here are a set of questions employees may pose when retrieving data:
     \item Which department has received the most Thanks in the company?
     \item Return a list of all employees who have nicknames.
     \item List all company values for the company.
-    \item Which department head has received the most Thanks in the company?
-    \item Which one of an employee's thanks they gave received the most likes?
+    \item Which employee has received the most Thanks in the company?
+    \item Which one of an employee's Thanks they gave received the most likes?
     \item Who has never received a Thanks within a company?
     \item Who is the newest employee to have joined the company?
     \item What Thanks were posted in the database on October 20, 2014?
@@ -269,7 +269,7 @@ CK - cid
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[scale=.7]{./images/erd11-25.PNG}
+\includegraphics[scale=.7]{./images/erd12-5.PNG}
 \end{figure}
 \clearpage
 
@@ -645,7 +645,6 @@ There will multiple types of access privileges to the database. These access typ
 MySQL does not directly provide assertions, however triggers have been used to provide assertion-like functionality in MySQL. Assertions the Thanks Corporation needs are listed below.
     \begin{itemize}
     \item Determine whether an employee giving a Thanks with a company value is using a company value from the employee's own company.
-    % \item Determine whether an employee name being inserted already exists within the company.
     \end{itemize}
 \item Views \\
 Two views are utilized in this database.
